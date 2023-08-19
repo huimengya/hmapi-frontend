@@ -1,30 +1,32 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view />
+  <div id="app">
+    <BasicLayoutView />
+  </div>
 </template>
+<script setup lang="ts">
+import BasicLayoutView from "@/layouts/BasicLayoutView.vue";
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 
-<style>
+const store = useStore();
+const router = useRouter();
+
+// 主要看这里，在路由跳转之前会进行监听
+router.beforeEach((to, from, next) => {
+  console.log(to);
+  // 判断当前点击的组件是否加了权限
+  if (to.meta.access === "admin") {
+    // 获取当前登录用户的角色信息，判断是否有权限访问该页面
+    if (store.state.user?.loginUser?.role !== "admin") {
+      next({ path: "/error" });
+      return;
+    }
+  } else {
+    next();
+  }
+});
+</script>
+<style scoped>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
 }
 </style>
