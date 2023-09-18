@@ -1,5 +1,5 @@
 <template>
-  <div id="userManagerView">员工管理页面</div>
+  <div id="userManagerView">管理页面</div>
 </template>
 <script setup lang="ts"></script>
 <style scoped>

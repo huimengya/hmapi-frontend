@@ -1,11 +1,16 @@
 import AccessEnum from "@/access/AccessEnum";
+
 /**
  * 检查是否有权限（检查当前登录的用户是否具有某些权限）
  * @param loginUser 当前登录用户
  * @param needAccess 页面需要的权限
  * @returns boolean 是否有权限
  */
-const checkAccess = (loginUser: any, needAccess = AccessEnum.NOT_LOGIN) => {
+const checkAccess = (
+  loginUser: any,
+  needAccess: string = AccessEnum.NOT_LOGIN
+) => {
+  //debugger;
   // 如果用户未登录，那么用户只能访问不需要登录就能访问的页面
   const loginUserAccess = loginUser?.userRole ?? AccessEnum.NOT_LOGIN;
   if (needAccess === AccessEnum.NOT_LOGIN) {

@@ -7,7 +7,7 @@ export default createStore({
   mutations: {},
   actions: {},
   modules: {
-    // 用户
+    // user,
     user,
   },
 });

@@ -1,10 +1,7 @@
-/**
- * 用户权限枚举
- */
 const AccessEnum = {
   USER: "user",
   ADMIN: "admin",
-  NOT_LOGIN: "not_login",
+  NOT_LOGIN: "notLogin",
 };
 
 export default AccessEnum;
