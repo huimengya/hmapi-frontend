@@ -44,6 +44,8 @@ const store = useStore();
 
 // 路由跳转后，将跳转后的地址赋值给activeIndex.value
 router.afterEach((to, from, failure) => {
+  debugger;
+  console.log("路由跳转后", to);
   activeIndex.value = to.path;
 });
 // 菜单项点击事件

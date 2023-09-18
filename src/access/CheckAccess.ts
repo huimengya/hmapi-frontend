@@ -10,7 +10,7 @@ const checkAccess = (
   loginUser: any,
   needAccess: string = AccessEnum.NOT_LOGIN
 ) => {
-  //debugger;
+  debugger;
   // 如果用户未登录，那么用户只能访问不需要登录就能访问的页面
   const loginUserAccess = loginUser?.userRole ?? AccessEnum.NOT_LOGIN;
   if (needAccess === AccessEnum.NOT_LOGIN) {

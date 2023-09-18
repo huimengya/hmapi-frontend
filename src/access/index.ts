@@ -5,10 +5,10 @@ import AccessEnum from "@/access/AccessEnum";
 import checkAccess from "@/access/CheckAccess";
 
 router.beforeEach(async (to, from, next) => {
-  console.log("登陆用户信息1", store.state.user.loginUser);
   let loginUser = store.state.user.loginUser;
-  // // 如果之前没登陆过，自动登录
-  debugger;
+  //console.log("next", next);
+  // 如果之前没登陆过，自动登录
+  //debugger;
   // 如果用户未登录或者用户的角色信息不存在或为空，那么这个表达式为真。
   if (!loginUser || !loginUser.userRole) {
     // 加 await 是为了等用户登录成功之后，再执行后续的代码
@@ -29,6 +29,7 @@ router.beforeEach(async (to, from, next) => {
     }
     // 如果已经登陆了，但是权限不足，那么跳转到无权限页面，需要的权限是admin，但是用户不是admin返回false
     if (!checkAccess(loginUser, needAccess)) {
+      debugger;
       next("/error");
       return;
     }
