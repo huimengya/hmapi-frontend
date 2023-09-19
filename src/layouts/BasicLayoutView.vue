@@ -22,8 +22,6 @@
       <el-main>
         <router-view />
       </el-main>
-      <!--      底部-->
-      <el-footer>Footer</el-footer>
     </el-container>
   </div>
 </template>
@@ -44,7 +42,7 @@ const store = useStore();
 
 // 路由跳转后，将跳转后的地址赋值给activeIndex.value
 router.afterEach((to, from, failure) => {
-  debugger;
+  //debugger;
   console.log("路由跳转后", to);
   activeIndex.value = to.path;
 });

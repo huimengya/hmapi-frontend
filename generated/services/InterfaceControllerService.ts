@@ -3,33 +3,33 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { BaseResponse_boolean_ } from '../models/BaseResponse_boolean_';
-import type { BaseResponse_List_Post_ } from '../models/BaseResponse_List_Post_';
+import type { BaseResponse_Interface_ } from '../models/BaseResponse_Interface_';
+import type { BaseResponse_List_Interface_ } from '../models/BaseResponse_List_Interface_';
 import type { BaseResponse_long_ } from '../models/BaseResponse_long_';
-import type { BaseResponse_Page_Post_ } from '../models/BaseResponse_Page_Post_';
-import type { BaseResponse_Post_ } from '../models/BaseResponse_Post_';
+import type { BaseResponse_Page_Interface_ } from '../models/BaseResponse_Page_Interface_';
 import type { DeleteRequest } from '../models/DeleteRequest';
-import type { PostAddRequest } from '../models/PostAddRequest';
-import type { PostUpdateRequest } from '../models/PostUpdateRequest';
+import type { InterfaceAddRequest } from '../models/InterfaceAddRequest';
+import type { InterfaceUpdateRequest } from '../models/InterfaceUpdateRequest';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 
-export class PostControllerService {
+export class InterfaceControllerService {
 
     /**
-     * addPost
+     * addInterface
      * @param requestBody
      * @returns BaseResponse_long_ OK
      * @returns any Created
      * @throws ApiError
      */
-    public static addPostUsingPost(
-        requestBody?: PostAddRequest,
+    public static addInterfaceUsingPost(
+        requestBody?: InterfaceAddRequest,
     ): CancelablePromise<BaseResponse_long_ | any> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/post/add',
+            url: '/api/inter/add',
             body: requestBody,
             mediaType: 'application/json',
             errors: {
@@ -41,18 +41,18 @@ export class PostControllerService {
     }
 
     /**
-     * deletePost
+     * deleteInterface
      * @param requestBody
      * @returns BaseResponse_boolean_ OK
      * @returns any Created
      * @throws ApiError
      */
-    public static deletePostUsingPost(
+    public static deleteInterfaceUsingPost(
         requestBody?: DeleteRequest,
     ): CancelablePromise<BaseResponse_boolean_ | any> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/post/delete',
+            url: '/api/inter/delete',
             body: requestBody,
             mediaType: 'application/json',
             errors: {
@@ -64,17 +64,17 @@ export class PostControllerService {
     }
 
     /**
-     * getPostById
+     * getInterfaceById
      * @param id id
-     * @returns BaseResponse_Post_ OK
+     * @returns BaseResponse_Interface_ OK
      * @throws ApiError
      */
-    public static getPostByIdUsingGet(
+    public static getInterfaceByIdUsingGet(
         id?: number,
-    ): CancelablePromise<BaseResponse_Post_> {
+    ): CancelablePromise<BaseResponse_Interface_> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/post/get',
+            url: '/api/inter/get',
             query: {
                 'id': id,
             },
@@ -87,57 +87,45 @@ export class PostControllerService {
     }
 
     /**
-     * listPost
-     * @param age
-     * @param contact
-     * @param content
+     * listInterface
      * @param current
-     * @param education
-     * @param gender
-     * @param job
-     * @param loveExp
+     * @param id
+     * @param method
+     * @param name
      * @param pageSize
-     * @param place
-     * @param reviewStatus
      * @param sortField
      * @param sortOrder
+     * @param status
+     * @param url
      * @param userId
-     * @returns BaseResponse_List_Post_ OK
+     * @returns BaseResponse_List_Interface_ OK
      * @throws ApiError
      */
-    public static listPostUsingGet(
-        age?: number,
-        contact?: string,
-        content?: string,
+    public static listInterfaceUsingGet(
         current?: number,
-        education?: string,
-        gender?: number,
-        job?: string,
-        loveExp?: string,
+        id?: number,
+        method?: string,
+        name?: string,
         pageSize?: number,
-        place?: string,
-        reviewStatus?: number,
         sortField?: string,
         sortOrder?: string,
+        status?: number,
+        url?: string,
         userId?: number,
-    ): CancelablePromise<BaseResponse_List_Post_> {
+    ): CancelablePromise<BaseResponse_List_Interface_> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/post/list',
+            url: '/api/inter/list',
             query: {
-                'age': age,
-                'contact': contact,
-                'content': content,
                 'current': current,
-                'education': education,
-                'gender': gender,
-                'job': job,
-                'loveExp': loveExp,
+                'id': id,
+                'method': method,
+                'name': name,
                 'pageSize': pageSize,
-                'place': place,
-                'reviewStatus': reviewStatus,
                 'sortField': sortField,
                 'sortOrder': sortOrder,
+                'status': status,
+                'url': url,
                 'userId': userId,
             },
             errors: {
@@ -149,57 +137,45 @@ export class PostControllerService {
     }
 
     /**
-     * listPostByPage
-     * @param age
-     * @param contact
-     * @param content
+     * listInterfaceByPage
      * @param current
-     * @param education
-     * @param gender
-     * @param job
-     * @param loveExp
+     * @param id
+     * @param method
+     * @param name
      * @param pageSize
-     * @param place
-     * @param reviewStatus
      * @param sortField
      * @param sortOrder
+     * @param status
+     * @param url
      * @param userId
-     * @returns BaseResponse_Page_Post_ OK
+     * @returns BaseResponse_Page_Interface_ OK
      * @throws ApiError
      */
-    public static listPostByPageUsingGet(
-        age?: number,
-        contact?: string,
-        content?: string,
-        current?: number,
-        education?: string,
-        gender?: number,
-        job?: string,
-        loveExp?: string,
-        pageSize?: number,
-        place?: string,
-        reviewStatus?: number,
-        sortField?: string,
-        sortOrder?: string,
-        userId?: number,
-    ): CancelablePromise<BaseResponse_Page_Post_> {
+    public static listInterfaceByPageUsingGet(
+      current?: number,
+      id?: number,
+      method?: string,
+      name?: string,
+      pageSize?: number,
+      sortField?: string,
+      sortOrder?: string,
+      status?: number,
+      url?: string,
+      userId?: number,
+    ): CancelablePromise<BaseResponse_Page_Interface_> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/post/list/page',
+            url: '/api/inter/list/page',
             query: {
-                'age': age,
-                'contact': contact,
-                'content': content,
                 'current': current,
-                'education': education,
-                'gender': gender,
-                'job': job,
-                'loveExp': loveExp,
+                'id': id,
+                'method': method,
+                'name': name,
                 'pageSize': pageSize,
-                'place': place,
-                'reviewStatus': reviewStatus,
                 'sortField': sortField,
                 'sortOrder': sortOrder,
+                'status': status,
+                'url': url,
                 'userId': userId,
             },
             errors: {
@@ -211,18 +187,18 @@ export class PostControllerService {
     }
 
     /**
-     * updatePost
+     * updateInterface
      * @param requestBody
      * @returns BaseResponse_boolean_ OK
      * @returns any Created
      * @throws ApiError
      */
-    public static updatePostUsingPost(
-        requestBody?: PostUpdateRequest,
+    public static updateInterfaceUsingPost(
+        requestBody?: InterfaceUpdateRequest,
     ): CancelablePromise<BaseResponse_boolean_ | any> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/post/update',
+            url: '/api/inter/update',
             body: requestBody,
             mediaType: 'application/json',
             errors: {

@@ -3,17 +3,17 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { Interface } from './Interface';
 import type { OrderItem } from './OrderItem';
-import type { Post } from './Post';
 
-export type Page_Post_ = {
+export type Page_Interface_ = {
     countId?: string;
     current?: number;
     maxLimit?: number;
     optimizeCountSql?: boolean;
     orders?: Array<OrderItem>;
     pages?: number;
-    records?: Array<Post>;
+    records?: Array<Interface>;
     searchCount?: boolean;
     size?: number;
     total?: number;

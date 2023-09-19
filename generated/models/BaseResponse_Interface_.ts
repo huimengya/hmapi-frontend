@@ -3,11 +3,11 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type { Page_Post_ } from './Page_Post_';
+import type { Interface } from './Interface';
 
-export type BaseResponse_Page_Post_ = {
+export type BaseResponse_Interface_ = {
     code?: number;
-    data?: Page_Post_;
+    data?: Interface;
     message?: string;
 };
 
