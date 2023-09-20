@@ -8,14 +8,30 @@
     <el-table-column label="响应头" prop="responseHeader" />
     <el-table-column label="URL" prop="url" />
     <el-table-column label="方法" prop="method" />
-    <el-table-column label="状态" prop="status" />
-    <el-table-column align="right">
+    <el-table-column label="状态" prop="status">
+      <template v-slot="scope">
+        {{ scope.row.status === 1 ? "开启" : "关闭" }}
+      </template>
+    </el-table-column>
+    <el-table-column align="center">
       <template #header>
-        <el-button type="primary" size="small" @click="handleNew()"
+        <el-button type="primary" size="mini" @click="handleNew()"
           >新建
         </el-button>
       </template>
       <template #default="scope">
+        <el-button
+          v-if="scope.row.status === 0"
+          size="small"
+          @click="onAndOffline(scope.$index, scope.row)"
+          >发布
+        </el-button>
+        <el-button
+          v-if="scope.row.status === 1"
+          size="small"
+          @click="onAndOffline(scope.$index, scope.row)"
+          >下架
+        </el-button>
         <el-button size="small" @click="handleEdit(scope.$index, scope.row)"
           >编辑
         </el-button>
@@ -67,7 +83,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 import { ElMessage } from "element-plus";
-import { InterfaceControllerService } from "../../../generated";
+import { IdRequest, InterfaceControllerService } from "../../../generated";
 
 const search = ref("");
 
@@ -75,7 +91,7 @@ const search = ref("");
 const editDialogVisible = ref(false);
 const editForm = ref({}); // 用于编辑的表单数据
 
-// 处理新建按钮点击事件
+/** 处理新建按钮点击事件*/
 const handleNew = () => {
   console.log("新建按钮点击");
   // 清空新建表单数据
@@ -83,7 +99,7 @@ const handleNew = () => {
   // 打开新建对话框
   editDialogVisible.value = true;
 };
-
+/** 处理编辑按钮点击事件*/
 const handleEdit = (index, row) => {
   // 修改
   console.log("编辑按钮点击，当前行数据：", row);
@@ -107,13 +123,12 @@ const dialogVisible = async () => {
     ElMessage.success("更新成功!");
   }
 };
-// 关闭对话框
+/** 关闭对话框 */
 const dialogVisibleClose = () => {
   // 关闭对话框
   editDialogVisible.value = false;
 };
-// 删除表单
-
+/** 处理删除按钮点击事件*/
 const handleDelete = async (index, row) => {
   confirm("是否删除？");
   console.log(index, row);
@@ -157,6 +172,22 @@ const loadData = async () => {
     console.log("接口管理", res.data);
     // total.value = res.data.total;
     show.value = true;
+  }
+};
+/**
+ * 发布和下架
+ */
+const onAndOffline = async (index, row) => {
+  //console.log("发布", row.id);
+  const res = await InterfaceControllerService.onlineInterfaceUsingPost({
+    id: row.id,
+  });
+  console.log("res", res);
+  if (res.code === 0) {
+    loadData();
+    ElMessage.success("success");
+  } else {
+    ElMessage.error("error");
   }
 };
 </script>

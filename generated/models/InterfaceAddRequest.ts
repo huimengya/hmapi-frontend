@@ -10,6 +10,7 @@ export type InterfaceAddRequest = {
     requestHeader?: string;
     requestParams?: string;
     responseHeader?: string;
+    status?: number;
     url?: string;
 };
 

@@ -17,6 +17,7 @@ export type { BaseResponse_Page_UserVO_ } from './models/BaseResponse_Page_UserV
 export type { BaseResponse_User_ } from './models/BaseResponse_User_';
 export type { BaseResponse_UserVO_ } from './models/BaseResponse_UserVO_';
 export type { DeleteRequest } from './models/DeleteRequest';
+export type { IdRequest } from './models/IdRequest';
 export type { Interface } from './models/Interface';
 export type { InterfaceAddRequest } from './models/InterfaceAddRequest';
 export type { InterfaceUpdateRequest } from './models/InterfaceUpdateRequest';

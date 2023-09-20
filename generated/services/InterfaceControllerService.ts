@@ -8,6 +8,7 @@ import type { BaseResponse_List_Interface_ } from '../models/BaseResponse_List_I
 import type { BaseResponse_long_ } from '../models/BaseResponse_long_';
 import type { BaseResponse_Page_Interface_ } from '../models/BaseResponse_Page_Interface_';
 import type { DeleteRequest } from '../models/DeleteRequest';
+import type { IdRequest } from '../models/IdRequest';
 import type { InterfaceAddRequest } from '../models/InterfaceAddRequest';
 import type { InterfaceUpdateRequest } from '../models/InterfaceUpdateRequest';
 
@@ -152,16 +153,16 @@ export class InterfaceControllerService {
      * @throws ApiError
      */
     public static listInterfaceByPageUsingGet(
-      current?: number,
-      id?: number,
-      method?: string,
-      name?: string,
-      pageSize?: number,
-      sortField?: string,
-      sortOrder?: string,
-      status?: number,
-      url?: string,
-      userId?: number,
+        current?: number,
+        id?: number,
+        method?: string,
+        name?: string,
+        pageSize?: number,
+        sortField?: string,
+        sortOrder?: string,
+        status?: number,
+        url?: string,
+        userId?: number,
     ): CancelablePromise<BaseResponse_Page_Interface_> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -178,6 +179,29 @@ export class InterfaceControllerService {
                 'url': url,
                 'userId': userId,
             },
+            errors: {
+                401: `Unauthorized`,
+                403: `Forbidden`,
+                404: `Not Found`,
+            },
+        });
+    }
+
+    /**
+     * onlineInterface
+     * @param requestBody
+     * @returns BaseResponse_boolean_ OK
+     * @returns any Created
+     * @throws ApiError
+     */
+    public static onlineInterfaceUsingPost(
+        requestBody?: IdRequest,
+    ): CancelablePromise<BaseResponse_boolean_ | any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/inter/online',
+            body: requestBody,
+            mediaType: 'application/json',
             errors: {
                 401: `Unauthorized`,
                 403: `Forbidden`,
