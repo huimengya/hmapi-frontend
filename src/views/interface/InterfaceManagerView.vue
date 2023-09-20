@@ -15,7 +15,7 @@
     </el-table-column>
     <el-table-column align="center">
       <template #header>
-        <el-button type="primary" size="mini" @click="handleNew()"
+        <el-button type="primary" size="small" @click="handleNew()"
           >新建
         </el-button>
       </template>
@@ -60,6 +60,13 @@
       <el-form-item label="响应头">
         <el-input v-model="editForm.responseHeader"></el-input>
       </el-form-item>
+      <el-form-item label="请求参数">
+        <el-input
+          type="textarea"
+          style="width: 50%"
+          v-model="editForm.requestParams"
+        ></el-input>
+      </el-form-item>
       <el-form-item label="URL">
         <el-input v-model="editForm.url"></el-input>
       </el-form-item>
@@ -83,7 +90,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 import { ElMessage } from "element-plus";
-import { IdRequest, InterfaceControllerService } from "../../../generated";
+import { InterfaceControllerService } from "../../../generated";
 
 const search = ref("");
 

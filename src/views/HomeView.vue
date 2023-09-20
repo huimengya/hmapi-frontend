@@ -35,6 +35,7 @@
         <p><strong>请求地址: </strong> {{ selectedApi.url }}</p>
         <p><strong>请求头: </strong> {{ selectedApi.requestHeader }}</p>
         <p><strong>响应头: </strong> {{ selectedApi.responseHeader }}</p>
+        <p><strong>请求参数: </strong> {{ selectedApi.requestParams }}</p>
         <p>
           <strong>状态: </strong>
           {{ selectedApi.status === 0 ? "关闭" : "开启" }}

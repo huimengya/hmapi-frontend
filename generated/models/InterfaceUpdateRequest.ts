@@ -9,6 +9,7 @@ export type InterfaceUpdateRequest = {
     method?: string;
     name?: string;
     requestHeader?: string;
+    requestParams?: string;
     responseHeader?: string;
     status?: number;
     url?: string;
