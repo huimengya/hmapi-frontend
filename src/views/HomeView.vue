@@ -9,7 +9,7 @@
       <el-table-column label="操作">
         <template v-slot="scope">
           <el-button type="primary" size="small" @click="viewApi(scope.row)">
-            查看接口
+            测试
           </el-button>
         </template>
       </el-table-column>
@@ -46,6 +46,29 @@
         </p>
         <!-- 这里可以展示更多接口相关信息 -->
       </div>
+      <div class="container" title="请求参数">
+        <el-input
+          type="textarea"
+          v-model="inputPara"
+          :style="{ width: '85%' }"
+          placeholder="请输入请求参数..."
+        ></el-input>
+        <div class="button-container">
+          <el-button type="primary" @click="send">发送</el-button>
+        </div>
+      </div>
+      <div>
+        <el-card class="box-card">
+          <template #header>
+            <div class="card-header">
+              <span>响应</span>
+            </div>
+          </template>
+          <div class="text">
+            {{ responseParam }}
+          </div>
+        </el-card>
+      </div>
     </el-dialog>
   </div>
 </template>
@@ -73,6 +96,8 @@ const apiList = ref([
 let selectedApi = reactive<Interface>({});
 const apiDialogVisible = ref(false);
 
+// 输入的参数
+const inputPara = ref();
 // 查看接口详情
 const viewApi = (row) => {
   apiDialogVisible.value = true;
@@ -101,6 +126,27 @@ const loadData = async () => {
     // total.value = res.data.total;
   }
 };
+/**
+ *  发送
+ */
+const responseParam = ref();
+const send = async () => {
+  //console.log("输入的参数：", inputPara.value);
+  //console.log("id：", selectedApi.id);
+  const res = await InterfaceControllerService.invokeInterfaceUsingPost({
+    id: selectedApi.id,
+    userRequestParam: inputPara.value,
+  });
+  console.log("res", res);
+  if (res.code === 0) {
+    responseParam.value = res.data;
+    ElMessage.success("成功");
+  } else if (res.code === 40100) {
+    ElMessage.info("您还没有登陆！！！");
+  } else {
+    ElMessage.error("调用失败");
+  }
+};
 </script>
 
 <style scoped>
@@ -108,5 +154,38 @@ const loadData = async () => {
 .home {
   text-align: center;
   margin-top: 20px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
+}
+
+.button-container {
+  margin-top: auto; /* 按钮容器向底部推动，始终在底部 */
+  align-self: flex-end; /* 按钮容器右对齐 */
+  position: absolute;
+  bottom: 0; /* 按钮容器位于底部 */
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.text {
+  font-size: 14px;
+  text-align: left;
+}
+
+.item {
+  margin-bottom: 18px;
+}
+
+.box-card {
+  margin-top: 10px;
+  width: 85%;
 }
 </style>

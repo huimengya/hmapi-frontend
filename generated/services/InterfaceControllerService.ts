@@ -6,10 +6,12 @@ import type { BaseResponse_boolean_ } from '../models/BaseResponse_boolean_';
 import type { BaseResponse_Interface_ } from '../models/BaseResponse_Interface_';
 import type { BaseResponse_List_Interface_ } from '../models/BaseResponse_List_Interface_';
 import type { BaseResponse_long_ } from '../models/BaseResponse_long_';
+import type { BaseResponse_object_ } from '../models/BaseResponse_object_';
 import type { BaseResponse_Page_Interface_ } from '../models/BaseResponse_Page_Interface_';
 import type { DeleteRequest } from '../models/DeleteRequest';
 import type { IdRequest } from '../models/IdRequest';
 import type { InterfaceAddRequest } from '../models/InterfaceAddRequest';
+import type { InterfaceInvokeRequest } from '../models/InterfaceInvokeRequest';
 import type { InterfaceUpdateRequest } from '../models/InterfaceUpdateRequest';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -79,6 +81,29 @@ export class InterfaceControllerService {
             query: {
                 'id': id,
             },
+            errors: {
+                401: `Unauthorized`,
+                403: `Forbidden`,
+                404: `Not Found`,
+            },
+        });
+    }
+
+    /**
+     * invokeInterface
+     * @param requestBody
+     * @returns BaseResponse_object_ OK
+     * @returns any Created
+     * @throws ApiError
+     */
+    public static invokeInterfaceUsingPost(
+        requestBody?: InterfaceInvokeRequest,
+    ): CancelablePromise<BaseResponse_object_ | any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/inter/invoke',
+            body: requestBody,
+            mediaType: 'application/json',
             errors: {
                 401: `Unauthorized`,
                 403: `Forbidden`,
