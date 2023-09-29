@@ -1,28 +1,62 @@
 <template>
   <div id="basicLayoutView">
-    <el-container>
-      <el-header>
-        <el-menu
-          :default-active="activeIndex"
-          class="el-menu-demo"
-          mode="horizontal"
-          @select="handleSelect"
+    <!-- 使用 flex 布局将菜单栏和头像放在同一行 -->
+    <div class="header">
+      <el-menu
+        :default-active="activeIndex"
+        class="el-menu-demo"
+        mode="horizontal"
+        style="width: 100%"
+        @select="handleSelect"
+      >
+        <!-- 通过遍历routes，动态渲染菜单项 -->
+        <el-menu-item
+          v-for="item in menuRoutes"
+          :key="item.path"
+          :index="item.path"
         >
-          <!--  通过遍历routes，动态渲染菜单项-->
-          <el-menu-item
-            v-for="item in menuRoutes"
-            :key="item.path"
-            :index="item.path"
-          >
-            {{ item.name }}
-          </el-menu-item>
-        </el-menu>
-      </el-header>
-      <!--      中间内容-->
-      <el-main>
-        <router-view />
-      </el-main>
-    </el-container>
+          {{ item.name }}
+        </el-menu-item>
+      </el-menu>
+      <!-- 在菜单栏右侧添加圆形头像 -->
+      <div class="avatar-container">
+        <el-dropdown @command="handleMenuCommand">
+          <el-avatar
+            class="avatar"
+            size="default"
+            :src="
+              store.state.user.loginUser.userAvatar
+                ? store.state.user.loginUser.userAvatar
+                : 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
+            "
+            shape="circle"
+          ></el-avatar>
+          <template #dropdown>
+            <!--       如果用户没有登陆只显示立即登陆-->
+            <el-dropdown-menu>
+              <el-dropdown-item
+                v-if="!store.state.user.loginUser.createTime"
+                command="login"
+                >立即登陆
+              </el-dropdown-item>
+              <el-dropdown-item
+                v-if="store.state.user.loginUser.createTime"
+                command="profile"
+                >个人中心
+              </el-dropdown-item>
+              <el-dropdown-item
+                v-if="store.state.user.loginUser.createTime"
+                command="logout"
+                >退出登陆
+              </el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
+      </div>
+    </div>
+    <div style="margin-top: 10px">
+      <router-view />
+    </div>
   </div>
 </template>
 <script setup lang="ts">
@@ -76,8 +110,59 @@ const menuRoutes = computed(() => {
     return true;
   });
 });
+/**
+ * 头像下拉菜单
+ */
+import { ElMessage } from "element-plus";
+
+const handleMenuCommand = async (command) => {
+  if (command === "login") {
+    // 执行登录操作，可以调用相应的方法
+    await router.push("/user/login");
+  } else if (command === "profile") {
+    // 跳转到个人中心页面或执行相关操作
+    await router.push("/user/profile");
+  } else if (command === "logout") {
+    // 执行退出登录操作，可以调用相应的方法
+    // 退出登录后，跳转到首页
+    ElMessage.success("退出登录成功");
+    await store.dispatch("user/logout");
+    // 跳转到首页,replace: true表示替换当前路由，不会在history中留下记录,然后刷新页面
+    await router.push({
+      path: "/",
+      replace: true,
+    });
+  }
+};
 </script>
 <style scoped>
+.example-showcase .el-dropdown-link {
+  cursor: pointer;
+  color: var(--el-color-primary);
+  display: flex;
+  align-items: center;
+}
+
+/* 样式可以根据你的需要进行调整 */
+/* 调整头像容器的样式，使其显示在菜单栏右侧 */
+/* 使用 flex 布局将菜单栏和头像水平排列 */
+.header {
+  display: flex;
+  justify-content: space-between; /* 将元素分散排列，头像在菜单栏右侧 */
+  align-items: center; /* 垂直居中对齐 */
+}
+
+/* 调整头像的样式 */
+.avatar-container {
+  margin-right: 5px;
+}
+
+/* 默认样式 */
+.avatar {
+  cursor: pointer; /* 鼠标悬停时显示手型光标 */
+}
+/*设置页面的背景颜色为白色*/
 #basicLayoutView {
+  background-color: white;
 }
 </style>

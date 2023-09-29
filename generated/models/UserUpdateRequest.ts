@@ -4,8 +4,10 @@
 /* eslint-disable */
 
 export type UserUpdateRequest = {
-    gender?: number;
+    balance?: number;
+    gender?: string;
     id?: number;
+    status?: number;
     userAccount?: string;
     userAvatar?: string;
     userName?: string;

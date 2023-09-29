@@ -3,11 +3,11 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type { Interface } from './Interface';
+import type { OrderVo } from './OrderVo';
 
-export type BaseResponse_Interface_ = {
+export type BaseResponse_OrderVo_ = {
     code?: number;
-    data?: Interface;
+    data?: OrderVo;
     message?: string;
 };
 

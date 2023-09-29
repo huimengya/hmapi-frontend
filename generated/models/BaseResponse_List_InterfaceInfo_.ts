@@ -3,11 +3,11 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type { Interface } from './Interface';
+import type { InterfaceInfo } from './InterfaceInfo';
 
-export type BaseResponse_List_Interface_ = {
+export type BaseResponse_List_InterfaceInfo_ = {
     code?: number;
-    data?: Array<Interface>;
+    data?: Array<InterfaceInfo>;
     message?: string;
 };
 

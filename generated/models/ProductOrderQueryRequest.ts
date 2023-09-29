@@ -3,12 +3,17 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type InterfaceInvokeRequest = {
+export type ProductOrderQueryRequest = {
+    addPoints?: number;
     current?: number;
-    id?: number;
+    orderName?: string;
+    orderNo?: string;
     pageSize?: number;
+    payType?: string;
+    productInfo?: string;
     sortField?: string;
     sortOrder?: string;
-    userRequestParam?: string;
+    status?: string;
+    total?: number;
 };
 

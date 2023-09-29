@@ -3,12 +3,11 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type UserRegisterRequest = {
+export type UserEmailRegisterRequest = {
     agreeToAnAgreement?: string;
-    checkPassword?: string;
+    captcha?: string;
+    emailAccount?: string;
     invitationCode?: string;
-    userAccount?: string;
     userName?: string;
-    userPassword?: string;
 };
 

@@ -3,11 +3,11 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type { Page_Interface_ } from './Page_Interface_';
+import type { ImageVo } from './ImageVo';
 
-export type BaseResponse_Page_Interface_ = {
+export type BaseResponse_ImageVo_ = {
     code?: number;
-    data?: Page_Interface_;
+    data?: ImageVo;
     message?: string;
 };
 

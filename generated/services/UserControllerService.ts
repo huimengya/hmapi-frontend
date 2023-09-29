@@ -6,12 +6,16 @@ import type { BaseResponse_boolean_ } from '../models/BaseResponse_boolean_';
 import type { BaseResponse_List_UserVO_ } from '../models/BaseResponse_List_UserVO_';
 import type { BaseResponse_long_ } from '../models/BaseResponse_long_';
 import type { BaseResponse_Page_UserVO_ } from '../models/BaseResponse_Page_UserVO_';
-import type { BaseResponse_User_ } from '../models/BaseResponse_User_';
 import type { BaseResponse_UserVO_ } from '../models/BaseResponse_UserVO_';
 import type { DeleteRequest } from '../models/DeleteRequest';
+import type { IdRequest } from '../models/IdRequest';
 import type { UserAddRequest } from '../models/UserAddRequest';
+import type { UserBindEmailRequest } from '../models/UserBindEmailRequest';
+import type { UserEmailLoginRequest } from '../models/UserEmailLoginRequest';
+import type { UserEmailRegisterRequest } from '../models/UserEmailRegisterRequest';
 import type { UserLoginRequest } from '../models/UserLoginRequest';
 import type { UserRegisterRequest } from '../models/UserRegisterRequest';
+import type { UserUnBindEmailRequest } from '../models/UserUnBindEmailRequest';
 import type { UserUpdateRequest } from '../models/UserUpdateRequest';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -33,6 +37,52 @@ export class UserControllerService {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/api/user/add',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                401: `Unauthorized`,
+                403: `Forbidden`,
+                404: `Not Found`,
+            },
+        });
+    }
+
+    /**
+     * banUser
+     * @param requestBody
+     * @returns BaseResponse_boolean_ OK
+     * @returns any Created
+     * @throws ApiError
+     */
+    public static banUserUsingPost(
+        requestBody?: IdRequest,
+    ): CancelablePromise<BaseResponse_boolean_ | any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/user/ban',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                401: `Unauthorized`,
+                403: `Forbidden`,
+                404: `Not Found`,
+            },
+        });
+    }
+
+    /**
+     * userBindEmail
+     * @param requestBody
+     * @returns BaseResponse_UserVO_ OK
+     * @returns any Created
+     * @throws ApiError
+     */
+    public static userBindEmailUsingPost(
+        requestBody?: UserBindEmailRequest,
+    ): CancelablePromise<BaseResponse_UserVO_ | any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/user/bind/login',
             body: requestBody,
             mediaType: 'application/json',
             errors: {
@@ -67,6 +117,52 @@ export class UserControllerService {
     }
 
     /**
+     * userEmailLogin
+     * @param requestBody
+     * @returns BaseResponse_UserVO_ OK
+     * @returns any Created
+     * @throws ApiError
+     */
+    public static userEmailLoginUsingPost(
+        requestBody?: UserEmailLoginRequest,
+    ): CancelablePromise<BaseResponse_UserVO_ | any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/user/email/login',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                401: `Unauthorized`,
+                403: `Forbidden`,
+                404: `Not Found`,
+            },
+        });
+    }
+
+    /**
+     * userEmailRegister
+     * @param requestBody
+     * @returns BaseResponse_long_ OK
+     * @returns any Created
+     * @throws ApiError
+     */
+    public static userEmailRegisterUsingPost(
+        requestBody?: UserEmailRegisterRequest,
+    ): CancelablePromise<BaseResponse_long_ | any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/user/email/register',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                401: `Unauthorized`,
+                403: `Forbidden`,
+                404: `Not Found`,
+            },
+        });
+    }
+
+    /**
      * getUserById
      * @param id id
      * @returns BaseResponse_UserVO_ OK
@@ -80,6 +176,30 @@ export class UserControllerService {
             url: '/api/user/get',
             query: {
                 'id': id,
+            },
+            errors: {
+                401: `Unauthorized`,
+                403: `Forbidden`,
+                404: `Not Found`,
+            },
+        });
+    }
+
+    /**
+     * getUserByInvitationCode
+     * @param invitationCode invitationCode
+     * @returns BaseResponse_UserVO_ OK
+     * @returns any Created
+     * @throws ApiError
+     */
+    public static getUserByInvitationCodeUsingPost(
+        invitationCode?: string,
+    ): CancelablePromise<BaseResponse_UserVO_ | any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/user/get/invitationCode',
+            query: {
+                'invitationCode': invitationCode,
             },
             errors: {
                 401: `Unauthorized`,
@@ -107,33 +227,50 @@ export class UserControllerService {
     }
 
     /**
+     * getCaptcha
+     * @param emailAccount emailAccount
+     * @returns BaseResponse_boolean_ OK
+     * @throws ApiError
+     */
+    public static getCaptchaUsingGet(
+        emailAccount?: string,
+    ): CancelablePromise<BaseResponse_boolean_> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/user/getCaptcha',
+            query: {
+                'emailAccount': emailAccount,
+            },
+            errors: {
+                401: `Unauthorized`,
+                403: `Forbidden`,
+                404: `Not Found`,
+            },
+        });
+    }
+
+    /**
      * listUser
-     * @param createTime
      * @param current
      * @param gender
      * @param id
      * @param pageSize
      * @param sortField
      * @param sortOrder
-     * @param updateTime
      * @param userAccount
-     * @param userAvatar
      * @param userName
      * @param userRole
      * @returns BaseResponse_List_UserVO_ OK
      * @throws ApiError
      */
     public static listUserUsingGet(
-        createTime?: string,
         current?: number,
-        gender?: number,
+        gender?: string,
         id?: number,
         pageSize?: number,
         sortField?: string,
         sortOrder?: string,
-        updateTime?: string,
         userAccount?: string,
-        userAvatar?: string,
         userName?: string,
         userRole?: string,
     ): CancelablePromise<BaseResponse_List_UserVO_> {
@@ -141,16 +278,13 @@ export class UserControllerService {
             method: 'GET',
             url: '/api/user/list',
             query: {
-                'createTime': createTime,
                 'current': current,
                 'gender': gender,
                 'id': id,
                 'pageSize': pageSize,
                 'sortField': sortField,
                 'sortOrder': sortOrder,
-                'updateTime': updateTime,
                 'userAccount': userAccount,
-                'userAvatar': userAvatar,
                 'userName': userName,
                 'userRole': userRole,
             },
@@ -164,32 +298,26 @@ export class UserControllerService {
 
     /**
      * listUserByPage
-     * @param createTime
      * @param current
      * @param gender
      * @param id
      * @param pageSize
      * @param sortField
      * @param sortOrder
-     * @param updateTime
      * @param userAccount
-     * @param userAvatar
      * @param userName
      * @param userRole
      * @returns BaseResponse_Page_UserVO_ OK
      * @throws ApiError
      */
     public static listUserByPageUsingGet(
-        createTime?: string,
         current?: number,
-        gender?: number,
+        gender?: string,
         id?: number,
         pageSize?: number,
         sortField?: string,
         sortOrder?: string,
-        updateTime?: string,
         userAccount?: string,
-        userAvatar?: string,
         userName?: string,
         userRole?: string,
     ): CancelablePromise<BaseResponse_Page_UserVO_> {
@@ -197,16 +325,13 @@ export class UserControllerService {
             method: 'GET',
             url: '/api/user/list/page',
             query: {
-                'createTime': createTime,
                 'current': current,
                 'gender': gender,
                 'id': id,
                 'pageSize': pageSize,
                 'sortField': sortField,
                 'sortOrder': sortOrder,
-                'updateTime': updateTime,
                 'userAccount': userAccount,
-                'userAvatar': userAvatar,
                 'userName': userName,
                 'userRole': userRole,
             },
@@ -221,13 +346,13 @@ export class UserControllerService {
     /**
      * userLogin
      * @param requestBody
-     * @returns BaseResponse_User_ OK
+     * @returns BaseResponse_UserVO_ OK
      * @returns any Created
      * @throws ApiError
      */
     public static userLoginUsingPost(
         requestBody?: UserLoginRequest,
-    ): CancelablePromise<BaseResponse_User_ | any> {
+    ): CancelablePromise<BaseResponse_UserVO_ | any> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/api/user/login',
@@ -260,6 +385,29 @@ export class UserControllerService {
     }
 
     /**
+     * normalUser
+     * @param requestBody
+     * @returns BaseResponse_boolean_ OK
+     * @returns any Created
+     * @throws ApiError
+     */
+    public static normalUserUsingPost(
+        requestBody?: IdRequest,
+    ): CancelablePromise<BaseResponse_boolean_ | any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/user/normal',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                401: `Unauthorized`,
+                403: `Forbidden`,
+                404: `Not Found`,
+            },
+        });
+    }
+
+    /**
      * userRegister
      * @param requestBody
      * @returns BaseResponse_long_ OK
@@ -283,20 +431,61 @@ export class UserControllerService {
     }
 
     /**
+     * userUnBindEmail
+     * @param requestBody
+     * @returns BaseResponse_UserVO_ OK
+     * @returns any Created
+     * @throws ApiError
+     */
+    public static userUnBindEmailUsingPost(
+        requestBody?: UserUnBindEmailRequest,
+    ): CancelablePromise<BaseResponse_UserVO_ | any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/user/unbindEmail',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                401: `Unauthorized`,
+                403: `Forbidden`,
+                404: `Not Found`,
+            },
+        });
+    }
+
+    /**
      * updateUser
      * @param requestBody
-     * @returns BaseResponse_boolean_ OK
+     * @returns BaseResponse_UserVO_ OK
      * @returns any Created
      * @throws ApiError
      */
     public static updateUserUsingPost(
         requestBody?: UserUpdateRequest,
-    ): CancelablePromise<BaseResponse_boolean_ | any> {
+    ): CancelablePromise<BaseResponse_UserVO_ | any> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/api/user/update',
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                401: `Unauthorized`,
+                403: `Forbidden`,
+                404: `Not Found`,
+            },
+        });
+    }
+
+    /**
+     * updateVoucher
+     * @returns BaseResponse_UserVO_ OK
+     * @returns any Created
+     * @throws ApiError
+     */
+    public static updateVoucherUsingPost(): CancelablePromise<BaseResponse_UserVO_ | any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/user/update/voucher',
             errors: {
                 401: `Unauthorized`,
                 403: `Forbidden`,

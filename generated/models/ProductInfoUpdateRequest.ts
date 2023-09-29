@@ -3,14 +3,13 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type InterfaceAddRequest = {
+export type ProductInfoUpdateRequest = {
+    addPoints?: number;
     description?: string;
-    method?: string;
+    expirationTime?: string;
+    id?: number;
     name?: string;
-    requestHeader?: string;
-    requestParams?: string;
-    responseHeader?: string;
-    status?: number;
-    url?: string;
+    productType?: string;
+    total?: number;
 };
 

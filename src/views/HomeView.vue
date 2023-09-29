@@ -83,7 +83,7 @@ import {
   ElDialog,
   ElMessage,
 } from "element-plus";
-import { Interface, InterfaceControllerService } from "../../generated";
+import { InterfaceInfo, InterfaceInfoControllerService } from "../../generated";
 
 // 接口列表数据
 const apiList = ref([
@@ -93,7 +93,7 @@ const apiList = ref([
 ]);
 
 // 选中的接口和接口详情弹窗状态
-let selectedApi = reactive<Interface>({});
+let selectedApi = reactive<InterfaceInfo>({});
 const apiDialogVisible = ref(false);
 
 // 输入的参数
@@ -116,7 +116,8 @@ onMounted(() => {
   loadData();
 });
 const loadData = async () => {
-  const res = await InterfaceControllerService.listInterfaceByPageUsingGet();
+  const res =
+    await InterfaceInfoControllerService.listInterfaceInfoByPageUsingGet();
   if (res.code !== 0) {
     ElMessage.error(res.message);
     return;
@@ -133,10 +134,12 @@ const responseParam = ref();
 const send = async () => {
   //console.log("输入的参数：", inputPara.value);
   //console.log("id：", selectedApi.id);
-  const res = await InterfaceControllerService.invokeInterfaceUsingPost({
-    id: selectedApi.id,
-    userRequestParam: inputPara.value,
-  });
+  const res = await InterfaceInfoControllerService.invokeInterfaceInfoUsingPost(
+    {
+      id: selectedApi.id,
+      userRequestParam: inputPara.value,
+    }
+  );
   console.log("res", res);
   if (res.code === 0) {
     responseParam.value = res.data;

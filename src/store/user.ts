@@ -5,12 +5,7 @@ import { UserControllerService } from "../../generated";
 export default {
   namespaced: true,
   state: () => ({
-    loginUser: {
-      userName: "未登录",
-      userRole: "",
-      // 这里用户角色千万不能有默认值，比如：userRole: "未登录"，userRole: "notLogin"
-      // 否则会出现刷新登陆太失效
-    },
+    loginUser: {},
   }),
   actions: {
     async getLoginUser({ commit, state }, payload) {
@@ -24,10 +19,7 @@ export default {
       } else {
         // 2.如果没有登录，那么就设置为未登录
         // debugger;
-        commit("updateLoginUser", {
-          ...state.loginUser,
-          userRole: AccessEnum.NOT_LOGIN,
-        });
+        commit("updateLoginUser", {});
       }
     },
 
@@ -37,9 +29,7 @@ export default {
       const res = await UserControllerService.userLogoutUsingPost();
       //console.log("退出登录，响应的数据", res);
       if (res.code === 0) {
-        commit("updateLoginUser", {
-          userName: "",
-        });
+        commit("updateLoginUser", {});
       }
     },
   },

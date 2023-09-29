@@ -1,43 +1,71 @@
 <template>
+  <!--搜索表单：接口名称、接口状态搜索-->
+  <el-form :inline="true" :model="search" class="demo-form-inline">
+    <el-form-item label="接口名称">
+      <el-input v-model="search.name" placeholder="请输入接口名称"></el-input>
+    </el-form-item>
+    <el-form-item label="接口状态">
+      <el-select v-model="search.status" placeholder="请选择">
+        <el-option label="审核中" value="0"></el-option>
+        <el-option label="上线" value="1"></el-option>
+        <el-option label="下线" value="2"></el-option>
+      </el-select>
+    </el-form-item>
+    <el-form-item>
+      <el-button type="primary" plain @click="loadData">查询</el-button>
+      <el-button type="primary" @click="handleNew()">新建</el-button>
+    </el-form-item>
+  </el-form>
   <!-- 表格 -->
-  <el-table :data="dataList" style="width: 100%">
-    <el-table-column label="ID" prop="id" />
-    <el-table-column label="名字" prop="name" />
-    <el-table-column label="描述" prop="description" />
-    <el-table-column label="请求头" prop="requestHeader" />
-    <el-table-column label="响应头" prop="responseHeader" />
-    <el-table-column label="URL" prop="url" />
-    <el-table-column label="方法" prop="method" />
-    <el-table-column label="状态" prop="status">
+  <el-table :data="dataList" style="width: auto">
+    <el-table-column label="ID" prop="id" width="100" />
+    <el-table-column label="名字" prop="name" width="100" />
+    <el-table-column label="描述" prop="description" width="140" />
+    <el-table-column label="请求头" prop="requestHeader" width="120" />
+    <el-table-column label="响应头" prop="responseHeader" width="120" />
+    <el-table-column label="URL" prop="url" width="140" />
+    <el-table-column label="方法" prop="method" width="60" />
+    <el-table-column label="状态" prop="status" align="center" width="60">
       <template v-slot="scope">
-        {{ scope.row.status === 1 ? "开启" : "关闭" }}
+        <i
+          class="status status-warning"
+          title="审核中"
+          v-if="scope.row.status === 0"
+        ></i>
+        <i
+          class="status status-success"
+          title="已上线"
+          v-else-if="scope.row.status === 1"
+        ></i>
+        <i
+          class="status status-danger"
+          title="已下线"
+          v-else-if="scope.row.status === 2"
+        ></i>
       </template>
     </el-table-column>
-    <el-table-column align="center">
-      <template #header>
-        <el-button type="primary" size="small" @click="handleNew()"
-          >新建
-        </el-button>
-      </template>
-      <template #default="scope">
+    <!--    操作-->
+    <el-table-column label="操作" align="center" width="260">
+      <template v-slot="scope">
+        <!--        状态按钮-->
         <el-button
-          v-if="scope.row.status === 0"
           size="small"
-          @click="onAndOffline(scope.$index, scope.row)"
-          >发布
+          :type="getStatusButtonType(scope.row.status)"
+          @click="onAndoff(scope.$index, scope.row)"
+        >
+          {{ getStatusButtonText(scope.row.status) }}
         </el-button>
         <el-button
-          v-if="scope.row.status === 1"
           size="small"
-          @click="onAndOffline(scope.$index, scope.row)"
-          >下架
-        </el-button>
-        <el-button size="small" @click="handleEdit(scope.$index, scope.row)"
+          type="primary"
+          plain
+          @click="handleEdit(scope.$index, scope.row)"
           >编辑
         </el-button>
         <el-button
           size="small"
           type="danger"
+          plain
           @click="handleDelete(scope.$index, scope.row)"
           >删除
         </el-button>
@@ -45,7 +73,7 @@
     </el-table-column>
   </el-table>
   <!-- 编辑对话框 -->
-  <el-dialog title="编辑接口信息" v-model="editDialogVisible">
+  <el-dialog title="新增/编辑" v-model="editDialogVisible">
     <!-- 编辑表单 -->
     <el-form :model="editForm" label-width="80px">
       <el-form-item label="名字">
@@ -63,8 +91,15 @@
       <el-form-item label="请求参数">
         <el-input
           type="textarea"
-          style="width: 50%"
+          style="width: 100%"
           v-model="editForm.requestParams"
+        ></el-input>
+      </el-form-item>
+      <el-form-item label="响应参数">
+        <el-input
+          type="textarea"
+          style="width: 100%"
+          v-model="editForm.responseParams"
         ></el-input>
       </el-form-item>
       <el-form-item label="URL">
@@ -76,6 +111,12 @@
       <el-form-item label="状态">
         <el-input v-model="editForm.status"></el-input>
       </el-form-item>
+      <el-form-item label="调用次数">
+        <el-input v-model="editForm.totalInvokes"></el-input>
+      </el-form-item>
+      <el-form-item label="接口头像">
+        <el-input v-model="editForm.avatarUrl"></el-input>
+      </el-form-item>
     </el-form>
     <!-- 确认和取消按钮 -->
     <template #footer>
@@ -85,28 +126,107 @@
       </span>
     </template>
   </el-dialog>
+  <!-- 分页 -->
+  <div class="pagination-class">
+    <el-pagination
+      @size-change="handlePageSizeChange"
+      @current-change="handleCurrentPageChange"
+      showTotal="true"
+      :current-page="search.current"
+      :page-sizes="[5, 10, 15, 20, 50]"
+      :page-size="search.pageSize"
+      :total="parseInt(total, 10)"
+      small
+      layout="prev, pager, next"
+    />
+  </div>
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 import { ElMessage } from "element-plus";
-import { InterfaceControllerService } from "../../../generated";
-
-const search = ref("");
+import {
+  InterfaceInfoControllerService,
+  InterfaceInfoQueryRequest,
+} from "../../../generated";
 
 // 添加编辑对话框相关数据
 const editDialogVisible = ref(false);
-const editForm = ref({}); // 用于编辑的表单数据
+const editForm = ref({}); // 用于编辑的更新表单数据
 
 /** 处理新建按钮点击事件*/
+// 是否是新建
+const isNew = ref(false);
 const handleNew = () => {
   console.log("新建按钮点击");
-  // 清空新建表单数据
+  // 清空编辑表单
   editForm.value = {};
+  // 设置为新建
+  isNew.value = true;
   // 打开新建对话框
   editDialogVisible.value = true;
 };
-/** 处理编辑按钮点击事件*/
+
+// 保存编辑后的数据
+const dialogVisible = async () => {
+  // 发送请求将编辑后的数据保存到后端，这里需要你实现相应的请求逻辑
+  // 将输入的内容转为JSON格式
+  const requestParams = JSON.parse(editForm.value.requestParams);
+  const responseParams = JSON.parse(editForm.value.responseParams);
+  if (isNew.value) {
+    // 新建
+    alert("新建");
+    const res = await InterfaceInfoControllerService.addInterfaceInfoUsingPost(
+      (editForm.value = {
+        ...editForm.value,
+        requestParams,
+        responseParams,
+      })
+    );
+    console.log("新增数据", res);
+    if (res.code === 0) {
+      loadData();
+      // 保存成功后关闭编辑对话框
+      editDialogVisible.value = false;
+      ElMessage.success("新增成功!");
+    }
+    return;
+  } else {
+    // 更新
+    alert("更新");
+    const res =
+      await InterfaceInfoControllerService.updateInterfaceInfoUsingPost(
+        (editForm.value = {
+          ...editForm.value,
+          requestParams,
+          responseParams,
+        })
+      );
+    console.log("更新数据", res);
+    if (res.code === 0) {
+      loadData();
+      // 保存成功后关闭编辑对话框
+      editDialogVisible.value = false;
+      ElMessage.success("更新成功!");
+    }
+  }
+};
+/** 关闭对话框 */
+const dialogVisibleClose = () => {
+  // 关闭对话框
+  editDialogVisible.value = false;
+};
+/**操作按钮*/
+const onAndoff = (index, row) => {
+  console.log("操作按钮点击", row);
+  if (row.status === 0) {
+    online(index, row);
+  } else if (row.status === 1) {
+    offline(index, row);
+  } else if (row.status === 2) {
+    online(index, row);
+  }
+};
 const handleEdit = (index, row) => {
   // 修改
   console.log("编辑按钮点击，当前行数据：", row);
@@ -115,80 +235,122 @@ const handleEdit = (index, row) => {
   // 打开编辑对话框
   editDialogVisible.value = true;
 };
-// 保存编辑后的数据
-const dialogVisible = async () => {
-  // 发送请求将编辑后的数据保存到后端，这里需要你实现相应的请求逻辑
-  // console.log("对话框：", editForm.value);
-  const res = await InterfaceControllerService.updateInterfaceUsingPost(
-    editForm.value
-  );
-  console.log("更新数据", res);
-  if (res.code === 0) {
-    loadData();
-    // 保存成功后关闭编辑对话框
-    editDialogVisible.value = false;
-    ElMessage.success("更新成功!");
-  }
-};
-/** 关闭对话框 */
-const dialogVisibleClose = () => {
-  // 关闭对话框
-  editDialogVisible.value = false;
-};
-/** 处理删除按钮点击事件*/
 const handleDelete = async (index, row) => {
   confirm("是否删除？");
   console.log(index, row);
-  const res = await InterfaceControllerService.deleteInterfaceUsingPost(row);
+  const res = await InterfaceInfoControllerService.deleteInterfaceInfoUsingPost(
+    row
+  );
   console.log("删除数据：", row.id);
   if (res.code === 0) {
     loadData();
   }
 };
-// 请求后端
+// 定义响应式变量 用于控制表格是否显示
 const show = ref(false);
 // 定义响应式数组 用于存放表格数据
 const dataList = ref([]);
-// 定义响应式对象 用于存放总条数
-// const total = ref(0);
 
-// 搜索 todo：搜索
-// const onChange = async () => {
-//   console.log("输入的值：", search.value);
-//   const res = await InterfaceControllerService.listInterfaceByPageUsingGet({
-//     queryParams,
-//   });
-//   console.log("查询数据：", res);
-// };
-// 向后端发送请求，获取数据
 onMounted(() => {
   loadData();
 });
 /**
  * 定义一个函数，用于分页
  */
-// todo: 分页
+// 定义响应式对象 用于存放总条数,确保分页正常
+const total = ref(0);
+// 在 setup 部分添加处理分页变化的函数
+const handlePageSizeChange = (pageSize) => {
+  search.value.pageSize = pageSize; // 更新 pageSize
+  loadData(); // 重新加载数据
+};
+
+const handleCurrentPageChange = (currentPage) => {
+  search.value.current = currentPage; // 更新 current
+  loadData(); // 重新加载数据
+};
+/**
+ * 搜索
+ */
+// 定义搜索表单数据 status: 0, // 状态 0:审核中 1:上线 2:下线
+const search = ref<InterfaceInfoQueryRequest>({
+  name: "",
+  status: undefined,
+  current: 1,
+  pageSize: 5,
+});
 const loadData = async () => {
+  // 不显示表格
   show.value = false;
-  const res = await InterfaceControllerService.listInterfaceByPageUsingGet();
-  if (res.code !== 0) {
-    ElMessage.error(res.message);
-    return;
-  } else {
-    dataList.value = res.data.records;
+  // 发送请求获取数据
+  const res =
+    await InterfaceInfoControllerService.listInterfaceInfoByPageUsingPost(
+      search.value
+    );
+  if (res.code === 0) {
+    // 将数据赋值给响应式变量
+    dataList.value = res.data?.records;
     console.log("接口管理", res.data);
-    // total.value = res.data.total;
+    total.value = res.data?.total;
+    console.log("total", res.data?.total);
     show.value = true;
+  } else {
+    ElMessage.error(res.message);
+  }
+};
+/**
+ * 状态按钮
+ */
+// 获取按钮类型的函数
+const getStatusButtonType = (status: number) => {
+  switch (status) {
+    case 0:
+      return "warning"; // 审核中，黄色按钮
+    case 1:
+      return "success"; // 上线，绿色按钮
+    case 2:
+      return "danger"; // 下线，红色按钮
+    default:
+      return "default"; // 默认按钮类型
+  }
+};
+// 获取按钮文本的函数
+const getStatusButtonText = (status: number) => {
+  switch (status) {
+    case 0:
+      return "上线";
+    case 1:
+      return "下线";
+    case 2:
+      return "上线";
+    default:
+      return "未知状态";
   }
 };
 /**
  * 发布和下架
  */
-const onAndOffline = async (index, row) => {
+const online = async (index, row) => {
   //console.log("发布", row.id);
-  const res = await InterfaceControllerService.onlineInterfaceUsingPost({
-    id: row.id,
-  });
+  const res = await InterfaceInfoControllerService.onlineInterfaceInfoUsingPost(
+    {
+      id: row.id,
+    }
+  );
+  console.log("res", res);
+  if (res.code === 0) {
+    loadData();
+    ElMessage.success("success");
+  } else {
+    ElMessage.error("error");
+  }
+};
+const offline = async (index, row) => {
+  //console.log("发布", row.id);
+  const res =
+    await InterfaceInfoControllerService.offlineInterfaceInfoUsingPost({
+      id: row.id,
+    });
   console.log("res", res);
   if (res.code === 0) {
     loadData();
@@ -198,4 +360,33 @@ const onAndOffline = async (index, row) => {
   }
 };
 </script>
-<style scoped></style>
+<style scoped>
+/*状态实心圆*/
+.status {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+/*状态颜色*/
+.status-warning {
+  background-color: #f1ae1b;
+}
+
+.status-success {
+  background-color: #59c837;
+}
+
+.status-danger {
+  background-color: #e9524a;
+}
+
+/*分页*/
+.pagination-class {
+  margin-top: 10px;
+  /*分页居中对齐*/
+  margin-left: 50%;
+}
+</style>

@@ -3,36 +3,34 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { BaseResponse_boolean_ } from '../models/BaseResponse_boolean_';
-import type { BaseResponse_Interface_ } from '../models/BaseResponse_Interface_';
-import type { BaseResponse_List_Interface_ } from '../models/BaseResponse_List_Interface_';
+import type { BaseResponse_List_ProductInfo_ } from '../models/BaseResponse_List_ProductInfo_';
 import type { BaseResponse_long_ } from '../models/BaseResponse_long_';
-import type { BaseResponse_object_ } from '../models/BaseResponse_object_';
-import type { BaseResponse_Page_Interface_ } from '../models/BaseResponse_Page_Interface_';
+import type { BaseResponse_Page_ProductInfo_ } from '../models/BaseResponse_Page_ProductInfo_';
+import type { BaseResponse_ProductInfo_ } from '../models/BaseResponse_ProductInfo_';
 import type { DeleteRequest } from '../models/DeleteRequest';
 import type { IdRequest } from '../models/IdRequest';
-import type { InterfaceAddRequest } from '../models/InterfaceAddRequest';
-import type { InterfaceInvokeRequest } from '../models/InterfaceInvokeRequest';
-import type { InterfaceUpdateRequest } from '../models/InterfaceUpdateRequest';
+import type { ProductInfoAddRequest } from '../models/ProductInfoAddRequest';
+import type { ProductInfoUpdateRequest } from '../models/ProductInfoUpdateRequest';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 
-export class InterfaceControllerService {
+export class ProductInfoControllerService {
 
     /**
-     * addInterface
+     * addProductInfo
      * @param requestBody
      * @returns BaseResponse_long_ OK
      * @returns any Created
      * @throws ApiError
      */
-    public static addInterfaceUsingPost(
-        requestBody?: InterfaceAddRequest,
+    public static addProductInfoUsingPost(
+        requestBody?: ProductInfoAddRequest,
     ): CancelablePromise<BaseResponse_long_ | any> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/inter/add',
+            url: '/api/productInfo/add',
             body: requestBody,
             mediaType: 'application/json',
             errors: {
@@ -44,18 +42,18 @@ export class InterfaceControllerService {
     }
 
     /**
-     * deleteInterface
+     * deleteProductInfo
      * @param requestBody
      * @returns BaseResponse_boolean_ OK
      * @returns any Created
      * @throws ApiError
      */
-    public static deleteInterfaceUsingPost(
+    public static deleteProductInfoUsingPost(
         requestBody?: DeleteRequest,
     ): CancelablePromise<BaseResponse_boolean_ | any> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/inter/delete',
+            url: '/api/productInfo/delete',
             body: requestBody,
             mediaType: 'application/json',
             errors: {
@@ -67,17 +65,17 @@ export class InterfaceControllerService {
     }
 
     /**
-     * getInterfaceById
+     * getProductInfoById
      * @param id id
-     * @returns BaseResponse_Interface_ OK
+     * @returns BaseResponse_ProductInfo_ OK
      * @throws ApiError
      */
-    public static getInterfaceByIdUsingGet(
+    public static getProductInfoByIdUsingGet(
         id?: number,
-    ): CancelablePromise<BaseResponse_Interface_> {
+    ): CancelablePromise<BaseResponse_ProductInfo_> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/inter/get',
+            url: '/api/productInfo/get',
             query: {
                 'id': id,
             },
@@ -90,69 +88,31 @@ export class InterfaceControllerService {
     }
 
     /**
-     * invokeInterface
-     * @param requestBody
-     * @returns BaseResponse_object_ OK
-     * @returns any Created
-     * @throws ApiError
-     */
-    public static invokeInterfaceUsingPost(
-        requestBody?: InterfaceInvokeRequest,
-    ): CancelablePromise<BaseResponse_object_ | any> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/api/inter/invoke',
-            body: requestBody,
-            mediaType: 'application/json',
-            errors: {
-                401: `Unauthorized`,
-                403: `Forbidden`,
-                404: `Not Found`,
-            },
-        });
-    }
-
-    /**
-     * listInterface
+     * listProductInfoBySearchTextPage
      * @param current
-     * @param id
-     * @param method
-     * @param name
      * @param pageSize
+     * @param searchText
      * @param sortField
      * @param sortOrder
-     * @param status
-     * @param url
-     * @param userId
-     * @returns BaseResponse_List_Interface_ OK
+     * @returns BaseResponse_Page_ProductInfo_ OK
      * @throws ApiError
      */
-    public static listInterfaceUsingGet(
+    public static listProductInfoBySearchTextPageUsingGet(
         current?: number,
-        id?: number,
-        method?: string,
-        name?: string,
         pageSize?: number,
+        searchText?: string,
         sortField?: string,
         sortOrder?: string,
-        status?: number,
-        url?: string,
-        userId?: number,
-    ): CancelablePromise<BaseResponse_List_Interface_> {
+    ): CancelablePromise<BaseResponse_Page_ProductInfo_> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/inter/list',
+            url: '/api/productInfo/get/searchText',
             query: {
                 'current': current,
-                'id': id,
-                'method': method,
-                'name': name,
                 'pageSize': pageSize,
+                'searchText': searchText,
                 'sortField': sortField,
                 'sortOrder': sortOrder,
-                'status': status,
-                'url': url,
-                'userId': userId,
             },
             errors: {
                 401: `Unauthorized`,
@@ -163,46 +123,43 @@ export class InterfaceControllerService {
     }
 
     /**
-     * listInterfaceByPage
+     * listProductInfo
+     * @param addPoints
      * @param current
-     * @param id
-     * @param method
+     * @param description
      * @param name
      * @param pageSize
+     * @param productType
      * @param sortField
      * @param sortOrder
-     * @param status
-     * @param url
-     * @param userId
-     * @returns BaseResponse_Page_Interface_ OK
+     * @param total
+     * @returns BaseResponse_List_ProductInfo_ OK
      * @throws ApiError
      */
-    public static listInterfaceByPageUsingGet(
+    public static listProductInfoUsingGet(
+        addPoints?: number,
         current?: number,
-        id?: number,
-        method?: string,
+        description?: string,
         name?: string,
         pageSize?: number,
+        productType?: string,
         sortField?: string,
         sortOrder?: string,
-        status?: number,
-        url?: string,
-        userId?: number,
-    ): CancelablePromise<BaseResponse_Page_Interface_> {
+        total?: number,
+    ): CancelablePromise<BaseResponse_List_ProductInfo_> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/inter/list/page',
+            url: '/api/productInfo/list',
             query: {
+                'addPoints': addPoints,
                 'current': current,
-                'id': id,
-                'method': method,
+                'description': description,
                 'name': name,
                 'pageSize': pageSize,
+                'productType': productType,
                 'sortField': sortField,
                 'sortOrder': sortOrder,
-                'status': status,
-                'url': url,
-                'userId': userId,
+                'total': total,
             },
             errors: {
                 401: `Unauthorized`,
@@ -213,18 +170,65 @@ export class InterfaceControllerService {
     }
 
     /**
-     * onlineInterface
+     * listProductInfoByPage
+     * @param addPoints
+     * @param current
+     * @param description
+     * @param name
+     * @param pageSize
+     * @param productType
+     * @param sortField
+     * @param sortOrder
+     * @param total
+     * @returns BaseResponse_Page_ProductInfo_ OK
+     * @throws ApiError
+     */
+    public static listProductInfoByPageUsingGet(
+        addPoints?: number,
+        current?: number,
+        description?: string,
+        name?: string,
+        pageSize?: number,
+        productType?: string,
+        sortField?: string,
+        sortOrder?: string,
+        total?: number,
+    ): CancelablePromise<BaseResponse_Page_ProductInfo_> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/productInfo/list/page',
+            query: {
+                'addPoints': addPoints,
+                'current': current,
+                'description': description,
+                'name': name,
+                'pageSize': pageSize,
+                'productType': productType,
+                'sortField': sortField,
+                'sortOrder': sortOrder,
+                'total': total,
+            },
+            errors: {
+                401: `Unauthorized`,
+                403: `Forbidden`,
+                404: `Not Found`,
+            },
+        });
+    }
+
+    /**
+     * offlineProductInfo
      * @param requestBody
      * @returns BaseResponse_boolean_ OK
      * @returns any Created
      * @throws ApiError
      */
-    public static onlineInterfaceUsingPost(
+    public static offlineProductInfoUsingPost(
         requestBody?: IdRequest,
     ): CancelablePromise<BaseResponse_boolean_ | any> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/inter/online',
+            url: '/api/productInfo/offline',
             body: requestBody,
             mediaType: 'application/json',
             errors: {
@@ -236,18 +240,41 @@ export class InterfaceControllerService {
     }
 
     /**
-     * updateInterface
+     * onlineProductInfo
      * @param requestBody
      * @returns BaseResponse_boolean_ OK
      * @returns any Created
      * @throws ApiError
      */
-    public static updateInterfaceUsingPost(
-        requestBody?: InterfaceUpdateRequest,
+    public static onlineProductInfoUsingPost(
+        requestBody?: IdRequest,
     ): CancelablePromise<BaseResponse_boolean_ | any> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/inter/update',
+            url: '/api/productInfo/online',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                401: `Unauthorized`,
+                403: `Forbidden`,
+                404: `Not Found`,
+            },
+        });
+    }
+
+    /**
+     * updateProductInfo
+     * @param requestBody
+     * @returns BaseResponse_boolean_ OK
+     * @returns any Created
+     * @throws ApiError
+     */
+    public static updateProductInfoUsingPost(
+        requestBody?: ProductInfoUpdateRequest,
+    ): CancelablePromise<BaseResponse_boolean_ | any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/productInfo/update',
             body: requestBody,
             mediaType: 'application/json',
             errors: {

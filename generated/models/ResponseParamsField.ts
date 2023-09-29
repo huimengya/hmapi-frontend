@@ -3,7 +3,10 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type View = {
-    contentType?: string;
+export type ResponseParamsField = {
+    desc?: string;
+    fieldName?: string;
+    id?: string;
+    type?: string;
 };
 

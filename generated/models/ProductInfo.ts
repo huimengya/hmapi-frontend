@@ -3,19 +3,18 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type Interface = {
+export type ProductInfo = {
+    addPoints?: number;
     createTime?: string;
     description?: string;
+    expirationTime?: string;
     id?: number;
     isDelete?: number;
-    method?: string;
     name?: string;
-    requestHeader?: string;
-    requestParams?: string;
-    responseHeader?: string;
+    productType?: string;
     status?: number;
+    total?: number;
     updateTime?: string;
-    url?: string;
     userId?: number;
 };
 
