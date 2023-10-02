@@ -29,6 +29,7 @@ export type { ImageVo } from './models/ImageVo';
 export type { InterfaceInfo } from './models/InterfaceInfo';
 export type { InterfaceInfoAddRequest } from './models/InterfaceInfoAddRequest';
 export type { InterfaceInfoQueryRequest } from './models/InterfaceInfoQueryRequest';
+export type { InterfaceInfoSearchTextRequest } from './models/InterfaceInfoSearchTextRequest';
 export type { InterfaceInfoUpdateAvatarRequest } from './models/InterfaceInfoUpdateAvatarRequest';
 export type { InterfaceInfoUpdateRequest } from './models/InterfaceInfoUpdateRequest';
 export type { InvokeRequest } from './models/InvokeRequest';

@@ -12,6 +12,7 @@ import type { DeleteRequest } from '../models/DeleteRequest';
 import type { IdRequest } from '../models/IdRequest';
 import type { InterfaceInfoAddRequest } from '../models/InterfaceInfoAddRequest';
 import type { InterfaceInfoQueryRequest } from '../models/InterfaceInfoQueryRequest';
+import type { InterfaceInfoSearchTextRequest } from '../models/InterfaceInfoSearchTextRequest';
 import type { InterfaceInfoUpdateAvatarRequest } from '../models/InterfaceInfoUpdateAvatarRequest';
 import type { InterfaceInfoUpdateRequest } from '../models/InterfaceInfoUpdateRequest';
 import type { InvokeRequest } from '../models/InvokeRequest';
@@ -93,31 +94,19 @@ export class InterfaceInfoControllerService {
 
     /**
      * listInterfaceInfoBySearchTextPage
-     * @param current
-     * @param pageSize
-     * @param searchText
-     * @param sortField
-     * @param sortOrder
+     * @param requestBody
      * @returns BaseResponse_Page_InterfaceInfo_ OK
+     * @returns any Created
      * @throws ApiError
      */
-    public static listInterfaceInfoBySearchTextPageUsingGet(
-        current?: number,
-        pageSize?: number,
-        searchText?: string,
-        sortField?: string,
-        sortOrder?: string,
-    ): CancelablePromise<BaseResponse_Page_InterfaceInfo_> {
+    public static listInterfaceInfoBySearchTextPageUsingPost(
+        requestBody?: InterfaceInfoSearchTextRequest,
+    ): CancelablePromise<BaseResponse_Page_InterfaceInfo_ | any> {
         return __request(OpenAPI, {
-            method: 'GET',
-            url: '/api/interfaceInfo/get/searchText',
-            query: {
-                'current': current,
-                'pageSize': pageSize,
-                'searchText': searchText,
-                'sortField': sortField,
-                'sortOrder': sortOrder,
-            },
+            method: 'POST',
+            url: '/api/interfaceInfo/get/searchText/',
+            body: requestBody,
+            mediaType: 'application/json',
             errors: {
                 401: `Unauthorized`,
                 403: `Forbidden`,
@@ -161,6 +150,7 @@ export class InterfaceInfoControllerService {
      * @param responseParams0FieldName
      * @param responseParams0Id
      * @param responseParams0Type
+     * @param responseParams0Value
      * @param returnFormat
      * @param sortField
      * @param sortOrder
@@ -181,6 +171,7 @@ export class InterfaceInfoControllerService {
         responseParams0FieldName?: string,
         responseParams0Id?: string,
         responseParams0Type?: string,
+        responseParams0Value?: string,
         returnFormat?: string,
         sortField?: string,
         sortOrder?: string,
@@ -202,6 +193,7 @@ export class InterfaceInfoControllerService {
                 'responseParams[0].fieldName': responseParams0FieldName,
                 'responseParams[0].id': responseParams0Id,
                 'responseParams[0].type': responseParams0Type,
+                'responseParams[0].value': responseParams0Value,
                 'returnFormat': returnFormat,
                 'sortField': sortField,
                 'sortOrder': sortOrder,

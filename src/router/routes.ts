@@ -4,7 +4,11 @@ import InterfaceManagerView from "@/views/interface/InterfaceManagerView.vue";
 import ErrorView from "@/views/ErrorView.vue";
 import LoginView from "@/views/user/LoginView.vue";
 import RegisterView from "@/views/user/RegisterView.vue";
-import AboutView from "@/views/AboutView.vue";
+import AboutView from "@/views/interface/InvokeView.vue";
+import InvokeView from "@/views/interface/InvokeView.vue";
+import ADView from "@/views/ad/ADView.vue";
+import TestView from "@/views/ad/TestView.vue";
+import ProfileView from "@/views/user/ProfileView.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -13,9 +17,9 @@ const routes: Array<RouteRecordRaw> = [
     component: HomeView,
   },
   {
-    path: "/test",
-    name: "测试",
-    component: AboutView,
+    path: "/user/profile",
+    name: "个人中心",
+    component: ProfileView,
   },
   {
     path: "/user/login",
@@ -39,6 +43,20 @@ const routes: Array<RouteRecordRaw> = [
     component: InterfaceManagerView,
     meta: {
       access: "admin",
+    },
+  },
+  {
+    path: "/interface/invoke",
+    name: "接口调试",
+    component: InvokeView,
+    props: (route) => ({
+      id: route.query.id,
+      url: route.query.url,
+      method: route.query.method,
+      requestParams: route.query.requestParams,
+    }),
+    meta: {
+      hideInMenu: true,
     },
   },
   {

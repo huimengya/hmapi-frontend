@@ -8,5 +8,6 @@ export type ResponseParamsField = {
     fieldName?: string;
     id?: string;
     type?: string;
+    value?: string;
 };
 

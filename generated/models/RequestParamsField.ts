@@ -9,5 +9,6 @@ export type RequestParamsField = {
     id?: string;
     required?: string;
     type?: string;
+    value?: string;
 };
 

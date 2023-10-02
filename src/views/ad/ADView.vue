@@ -2,12 +2,8 @@
   <div>
     <!-- 广告跑马灯 -->
     <el-carousel :interval="4000" type="card" height="200px">
-      <el-carousel-item v-for="item in ads" :key="item">
-        <!-- 这里可以放置广告内容 -->
-        <div class="advertisement">
-          <!-- 这里可以添加广告图片或其他内容 -->
-          <img class="advertisement-image" :src="item.image" alt="广告图片" />
-        </div>
+      <el-carousel-item v-for="item in 3" :key="item">
+        <h3 text="2xl" justify="center">{{ item }}</h3>
       </el-carousel-item>
     </el-carousel>
 
@@ -124,17 +120,24 @@
 
 <script setup lang="ts">
 import { onMounted, reactive, ref } from "vue";
-
-import { Search } from "@element-plus/icons-vue";
-import JsonViewer from "vue-json-viewer";
-import { ElButton, ElDialog, ElMessage } from "element-plus";
-import moment from "moment/moment";
-import { useRouter } from "vue-router";
 import {
   InterfaceInfo,
   InterfaceInfoControllerService,
   InterfaceInfoSearchTextRequest,
-} from "../../generated";
+} from "../../../generated";
+
+import {
+  Check,
+  Delete,
+  Edit,
+  Message,
+  Search,
+  Star,
+} from "@element-plus/icons-vue";
+import JsonViewer from "vue-json-viewer";
+import { ElButton, ElDialog, ElMessage } from "element-plus";
+import moment from "moment/moment";
+import { useRouter } from "vue-router";
 
 const router = useRouter();
 const searchKeyword = ref<InterfaceInfoSearchTextRequest>({
@@ -206,33 +209,6 @@ const invoke = () => {
     },
   });
 };
-/**
- * 广告位模拟数据，只是为了演示效果，实际使用时请删除
- */
-// 假数据模拟广告
-const ads = ref([
-  {
-    id: 1,
-    title: "广告标题1",
-    image:
-      "https://img2.baidu.com/it/u=582880280,2309543780&fm=253&fmt=auto&app=138&f=JPEG?w=889&h=500",
-    description: "这是广告描述1",
-  },
-  {
-    id: 2,
-    title: "广告标题2",
-    image:
-      "https://src.fanruan.com/2023-website/2023-sem/sem-fdl/sjsj-banner.jpg",
-    description: "这是广告描述2",
-  },
-  {
-    id: 3,
-    title: "广告标题3",
-    image:
-      "https://img2.baidu.com/it/u=2941311654,2723105374&fm=253&fmt=auto&app=138&f=JPEG?w=834&h=304",
-    description: "这是广告描述3",
-  },
-]);
 </script>
 
 <style scoped>
@@ -244,18 +220,6 @@ const ads = ref([
   line-height: 200px;
   margin: 0;
   text-align: center;
-}
-
-/* 这里可以添加样式，美化广告位的显示 */
-.advertisement {
-  text-align: center;
-  padding: 20px;
-  border-radius: 8px;
-}
-
-.advertisement-image {
-  width: 100%;
-  height: 100%;
 }
 
 .bottom {
@@ -279,7 +243,7 @@ const ads = ref([
 /* 这里可以添加样式以美化接口卡片，给它们一个高级感 */
 .interface-card {
   margin: auto;
-  padding: 15px;
+  padding: 10px;
   height: 90%;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* 卡片阴影 */
 }

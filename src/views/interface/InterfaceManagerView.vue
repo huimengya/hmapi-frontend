@@ -12,12 +12,18 @@
       </el-select>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" plain @click="loadData">查询</el-button>
-      <el-button type="primary" @click="handleNew()">新建</el-button>
+      <el-button
+        type="primary"
+        plain
+        :icon="Search"
+        circle
+        @click="loadData"
+      ></el-button>
+      <el-button color="#626aef" plain @click="handleNew()">新建</el-button>
     </el-form-item>
   </el-form>
   <!-- 表格 -->
-  <el-table :data="dataList" style="width: auto">
+  <el-table :data="dataList" style="width: auto" v-if="dataList.length > 0">
     <el-table-column label="ID" prop="id" width="100" />
     <el-table-column label="名字" prop="name" width="100" />
     <el-table-column label="描述" prop="description" width="140" />
@@ -56,22 +62,26 @@
           {{ getStatusButtonText(scope.row.status) }}
         </el-button>
         <el-button
-          size="small"
           type="primary"
-          plain
+          :icon="Edit"
+          circle
           @click="handleEdit(scope.$index, scope.row)"
-          >编辑
+        >
         </el-button>
         <el-button
-          size="small"
           type="danger"
-          plain
+          :icon="Delete"
+          circle
           @click="handleDelete(scope.$index, scope.row)"
-          >删除
+        >
         </el-button>
       </template>
     </el-table-column>
   </el-table>
+  <!-- 当没有接口时显示提示信息 -->
+  <div v-else>
+    <el-empty description="暂无数据" />
+  </div>
   <!-- 编辑对话框 -->
   <el-dialog title="新增/编辑" v-model="editDialogVisible">
     <!-- 编辑表单 -->
@@ -149,7 +159,14 @@ import {
   InterfaceInfoControllerService,
   InterfaceInfoQueryRequest,
 } from "../../../generated";
-
+import {
+  Check,
+  Delete,
+  Edit,
+  Message,
+  Search,
+  Star,
+} from "@element-plus/icons-vue";
 // 添加编辑对话框相关数据
 const editDialogVisible = ref(false);
 const editForm = ref({}); // 用于编辑的更新表单数据
@@ -246,8 +263,6 @@ const handleDelete = async (index, row) => {
     loadData();
   }
 };
-// 定义响应式变量 用于控制表格是否显示
-const show = ref(false);
 // 定义响应式数组 用于存放表格数据
 const dataList = ref([]);
 
@@ -280,8 +295,6 @@ const search = ref<InterfaceInfoQueryRequest>({
   pageSize: 5,
 });
 const loadData = async () => {
-  // 不显示表格
-  show.value = false;
   // 发送请求获取数据
   const res =
     await InterfaceInfoControllerService.listInterfaceInfoByPageUsingPost(
@@ -293,7 +306,6 @@ const loadData = async () => {
     console.log("接口管理", res.data);
     total.value = res.data?.total;
     console.log("total", res.data?.total);
-    show.value = true;
   } else {
     ElMessage.error(res.message);
   }
