@@ -23,7 +23,7 @@
     </el-form-item>
   </el-form>
   <!-- 表格 -->
-  <el-table :data="dataList" style="width: auto" v-if="dataList.length > 0">
+  <el-table :data="dataList" style="width: auto">
     <el-table-column label="ID" prop="id" width="100" />
     <el-table-column label="名字" prop="name" width="100" />
     <el-table-column label="描述" prop="description" width="140" />
@@ -68,20 +68,18 @@
           @click="handleEdit(scope.$index, scope.row)"
         >
         </el-button>
-        <el-button
-          type="danger"
-          :icon="Delete"
-          circle
-          @click="handleDelete(scope.$index, scope.row)"
+        <el-popconfirm
+          title="你确定要删除?"
+          @confirm="confirmEvent(scope.$index, scope.row)"
+          @cancel="cancelEvent"
         >
-        </el-button>
+          <template #reference>
+            <el-button type="danger" :icon="Delete" circle></el-button>
+          </template>
+        </el-popconfirm>
       </template>
     </el-table-column>
   </el-table>
-  <!-- 当没有接口时显示提示信息 -->
-  <div v-else>
-    <el-empty description="暂无数据" />
-  </div>
   <!-- 编辑对话框 -->
   <el-dialog title="新增/编辑" v-model="editDialogVisible">
     <!-- 编辑表单 -->
@@ -192,7 +190,8 @@ const dialogVisible = async () => {
   const responseParams = JSON.parse(editForm.value.responseParams);
   if (isNew.value) {
     // 新建
-    alert("新建");
+    console.log("新增:", requestParams);
+    console.log("新增:", responseParams);
     const res = await InterfaceInfoControllerService.addInterfaceInfoUsingPost(
       (editForm.value = {
         ...editForm.value,
@@ -247,19 +246,28 @@ const onAndoff = (index, row) => {
 const handleEdit = (index, row) => {
   // 修改
   console.log("编辑按钮点击，当前行数据：", row);
+  // 设置为非新建
+  isNew.value = false;
   // 将当前行的数据填充到编辑表单中
   editForm.value = { ...row };
   // 打开编辑对话框
   editDialogVisible.value = true;
 };
+// 删除
+const confirmEvent = (index, row) => {
+  handleDelete(index, row);
+};
+const cancelEvent = () => {
+  console.log("cancel!");
+};
 const handleDelete = async (index, row) => {
-  confirm("是否删除？");
   console.log(index, row);
   const res = await InterfaceInfoControllerService.deleteInterfaceInfoUsingPost(
     row
   );
   console.log("删除数据：", row.id);
   if (res.code === 0) {
+    ElMessage.success("删除成功!");
     loadData();
   }
 };

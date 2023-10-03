@@ -19,12 +19,16 @@
     <el-table :data="requestParams" border style="width: 75%; margin-top: 5px">
       <el-table-column align="center" label="参数名" prop="name">
         <template v-slot="scope">
-          <el-input v-model="scope.row.fieldName" placeholder="参数名" />
+          <el-input
+            v-model="scope.row.fieldName"
+            placeholder="参数名"
+            clearable
+          />
         </template>
       </el-table-column>
       <el-table-column align="center" label="参数值" prop="value">
         <template v-slot="scope">
-          <el-input v-model="scope.row.value" placeholder="参数值" />
+          <el-input v-model="scope.row.value" placeholder="参数值" clearable />
         </template>
       </el-table-column>
       <el-table-column align="center" label="操作">
@@ -92,42 +96,19 @@ const removeParam = (index: number) => {
 };
 // 功能三：响应
 const jsonResponse = ref({}); // 初始化为一个空对象
+
+const contentType = ref(""); // 响应类型
 const sendRequest = async () => {
-  // 更新jsonResponse为实际的响应数据对象
-  /* jsonResponse.value = [
-     {
-       id: "1706657106238844930",
-       returnFormat: "JSON",
-       name: "test",
-       url: "/api/name",
-       userId: "1706581025376837634",
-       method: "GET",
-       totalInvokes: "0",
-       requestParams:
-         '[{"id":"param1","fieldName":"param1","type":"string","desc":"Parameter description","required":"true"}]',
-       responseParams:
-         '[{"id":"field1","fieldName":"field1","type":"string","desc":"Response field description"}]',
-       description: "test",
-       requestExample: "https://example.com/api/request",
-       reduceScore: 0,
-       avatarUrl: "/avatar.jpg",
-       requestHeader: "Content-Type: application/json",
-       responseHeader: "Content-Type: application/json",
-       status: 0,
-       createTime: "2023-09-26T13:08:56.000+00:00",
-       updateTime: "2023-09-29T15:40:23.000+00:00",
-       isDelete: 0,
-     },
-   ];
-   */
   // 请求后端接口，获取响应数据
   console.log(requestParams.value);
   const res = await InterfaceInfoControllerService.invokeInterfaceUsingPost({
-    id: "1707790476440129537",
+    id: propsData.id,
     requestParams: requestParams.value,
   });
   console.log("接口响应", res);
   if (res.code === 0) {
+    ElMessage.success("请求成功");
+    // 获取响应的内容类型
     jsonResponse.value = res.data;
   } else {
     jsonResponse.value = { error: res.message };
@@ -138,6 +119,7 @@ const sendRequest = async () => {
  *  接收路由参数：接口id，请求地址，请求方法，请求参数
  */
 import { defineProps } from "vue";
+import { ElMessage } from "element-plus";
 
 const props = defineProps({
   id: {

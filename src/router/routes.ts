@@ -9,6 +9,8 @@ import InvokeView from "@/views/interface/InvokeView.vue";
 import ADView from "@/views/ad/ADView.vue";
 import TestView from "@/views/ad/TestView.vue";
 import ProfileView from "@/views/user/ProfileView.vue";
+import AvatarView from "@/views/user/AvatarView.vue";
+import TextView from "@/views/user/TextView.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -17,9 +19,28 @@ const routes: Array<RouteRecordRaw> = [
     component: HomeView,
   },
   {
+    path: "/text",
+    name: "文本",
+    component: TextView,
+  },
+  {
+    path: "/avatar",
+    name: "头像",
+    component: AvatarView,
+    props: (route) => ({
+      biz: route.query.biz,
+    }),
+    meta: {
+      hideInMenu: true,
+    },
+  },
+  {
     path: "/user/profile",
     name: "个人中心",
     component: ProfileView,
+    meta: {
+      hideInMenu: true,
+    },
   },
   {
     path: "/user/login",
