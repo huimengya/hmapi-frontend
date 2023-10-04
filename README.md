@@ -4,7 +4,8 @@
 ```
 npm install
 ```
-
+### openapi
+openapi --input http://localhost:7529/api/v3/api-docs --output ./generated --client axios
 ### Compiles and hot-reloads for development
 ```
 npm run serve

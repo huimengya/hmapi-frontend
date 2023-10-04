@@ -1,12 +1,16 @@
 <template>
   <div>
-    <!-- 广告跑马灯 -->
+    <!-- 广告 -->
     <el-carousel :interval="4000" type="card" height="200px">
       <el-carousel-item v-for="item in ads" :key="item">
         <!-- 这里可以放置广告内容 -->
         <div class="advertisement">
           <!-- 这里可以添加广告图片或其他内容 -->
-          <img class="advertisement-image" :src="item.image" alt="广告图片" />
+          <img
+            class="advertisement-image"
+            :src="item.avatarUrl"
+            alt="广告图片"
+          />
         </div>
       </el-carousel-item>
     </el-carousel>
@@ -38,6 +42,9 @@
             <span>{{ api.description }}</span>
             <div class="bottom">
               <time class="time">{{ api.name }}</time>
+              <time :class="{ highlighted: api.reduceScore }"
+                >{{ api.reduceScore }}星币/次
+              </time>
               <el-button
                 type="success"
                 :icon="Search"
@@ -131,6 +138,7 @@ import { ElButton, ElDialog, ElMessage } from "element-plus";
 import moment from "moment/moment";
 import { useRouter } from "vue-router";
 import {
+  AdvertisementControllerService,
   InterfaceInfo,
   InterfaceInfoControllerService,
   InterfaceInfoSearchTextRequest,
@@ -209,53 +217,32 @@ const invoke = () => {
 /**
  * 广告位模拟数据，只是为了演示效果，实际使用时请删除
  */
-// 假数据模拟广告
-const ads = ref([
-  {
-    id: 1,
-    title: "广告标题1",
-    image:
-      "https://img2.baidu.com/it/u=582880280,2309543780&fm=253&fmt=auto&app=138&f=JPEG?w=889&h=500",
-    description: "这是广告描述1",
-  },
-  {
-    id: 2,
-    title: "广告标题2",
-    image:
-      "https://src.fanruan.com/2023-website/2023-sem/sem-fdl/sjsj-banner.jpg",
-    description: "这是广告描述2",
-  },
-  {
-    id: 3,
-    title: "广告标题3",
-    image:
-      "https://img2.baidu.com/it/u=2941311654,2723105374&fm=253&fmt=auto&app=138&f=JPEG?w=834&h=304",
-    description: "这是广告描述3",
-  },
-]);
+const ads = ref([]);
+/**
+ * 请求后端接口获取广告数据
+ */
+onMounted(() => {
+  // 这里可以请求后端接口获取广告数据
+  advertisement();
+});
+const advertisement = async () => {
+  const res = await AdvertisementControllerService.listAdvertisementUsingGet();
+  if (res.code === 0) {
+    ads.value = res.data;
+  }
+};
 </script>
 
 <style scoped>
-/*跑马灯*/
-
-.el-carousel__item h3 {
-  color: #475669;
-  opacity: 0.75;
-  line-height: 200px;
-  margin: 0;
-  text-align: center;
-}
-
-/* 这里可以添加样式，美化广告位的显示 */
 .advertisement {
-  text-align: center;
-  padding: 20px;
-  border-radius: 8px;
+  text-align: center; /* 这里可以设置广告内容的对齐方式 */
+  border-radius: 8px; /* 这里可以设置广告内容的圆角 */
 }
 
 .advertisement-image {
   width: 100%;
   height: 100%;
+  object-fit: cover; /* 让图片按比例缩放并填充整个容器 */
 }
 
 .bottom {
@@ -325,5 +312,9 @@ const ads = ref([
 
 .status-danger {
   background-color: #e9524a;
+}
+
+.highlighted {
+  color: red;
 }
 </style>

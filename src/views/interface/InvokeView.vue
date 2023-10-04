@@ -16,7 +16,7 @@
     </el-button>
     <!-- 功能二：设置请求参数   -->
     <!-- 表格用来显示参数 -->
-    <el-table :data="requestParams" border style="width: 75%; margin-top: 5px">
+    <el-table :data="requestParams" border style="width: 66%; margin-top: 5px">
       <el-table-column align="center" label="参数名" prop="name">
         <template v-slot="scope">
           <el-input

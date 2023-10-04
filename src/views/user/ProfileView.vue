@@ -13,7 +13,6 @@
           class="input-name"
           v-else
           v-model="formData.userName"
-          @blur="stopEditing"
           @keydown.enter="stopEditing"
         />
       </el-descriptions-item>
@@ -70,7 +69,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted } from "vue";
+import { ref } from "vue";
 import {
   ElButton,
   ElDescriptions,
@@ -80,7 +79,7 @@ import {
 import { useStore } from "vuex";
 import { Calendar, WalletFilled, CreditCard } from "@element-plus/icons-vue";
 // 引入图片上传组件
-import AvatarView from "@/views/user/AvatarView.vue";
+import AvatarView from "@/views/upload/AvatarView.vue";
 import {
   DailyCheckInControllerService,
   UserControllerService,

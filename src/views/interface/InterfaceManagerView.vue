@@ -24,12 +24,12 @@
   </el-form>
   <!-- 表格 -->
   <el-table :data="dataList" style="width: auto">
-    <el-table-column label="ID" prop="id" width="100" />
+    <el-table-column label="ID" prop="id" width="160" />
     <el-table-column label="名字" prop="name" width="100" />
-    <el-table-column label="描述" prop="description" width="140" />
+    <el-table-column label="描述" prop="description" width="200" />
     <el-table-column label="请求头" prop="requestHeader" width="120" />
     <el-table-column label="响应头" prop="responseHeader" width="120" />
-    <el-table-column label="URL" prop="url" width="140" />
+    <el-table-column label="URL" prop="url" width="120" />
     <el-table-column label="方法" prop="method" width="60" />
     <el-table-column label="状态" prop="status" align="center" width="60">
       <template v-slot="scope">
@@ -85,7 +85,10 @@
     <!-- 编辑表单 -->
     <el-form :model="editForm" label-width="80px">
       <el-form-item label="名字">
-        <el-input v-model="editForm.name"></el-input>
+        <el-input
+          v-model="editForm.name"
+          placeholder="新建不要上传图片！！！"
+        ></el-input>
       </el-form-item>
       <el-form-item label="描述">
         <el-input v-model="editForm.description"></el-input>
@@ -116,13 +119,19 @@
       <el-form-item label="方法">
         <el-input v-model="editForm.method"></el-input>
       </el-form-item>
+      <el-form-item label="消耗积分">
+        <el-input v-model="editForm.reduceScore"></el-input>
+      </el-form-item>
       <el-form-item label="状态">
         <el-input v-model="editForm.status"></el-input>
       </el-form-item>
       <el-form-item label="调用次数">
         <el-input v-model="editForm.totalInvokes"></el-input>
       </el-form-item>
-      <el-form-item label="接口头像">
+      <el-form-item>
+        <AvatarView :biz="inter" :bizId="editForm.id" />
+      </el-form-item>
+      <el-form-item label="接口URL">
         <el-input v-model="editForm.avatarUrl"></el-input>
       </el-form-item>
     </el-form>
@@ -157,14 +166,10 @@ import {
   InterfaceInfoControllerService,
   InterfaceInfoQueryRequest,
 } from "../../../generated";
-import {
-  Check,
-  Delete,
-  Edit,
-  Message,
-  Search,
-  Star,
-} from "@element-plus/icons-vue";
+import { Delete, Edit, Search } from "@element-plus/icons-vue";
+import AvatarView from "@/views/upload/AvatarView.vue";
+
+const inter = "interface_avatar";
 // 添加编辑对话框相关数据
 const editDialogVisible = ref(false);
 const editForm = ref({}); // 用于编辑的更新表单数据

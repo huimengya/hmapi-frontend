@@ -4,13 +4,12 @@ import InterfaceManagerView from "@/views/interface/InterfaceManagerView.vue";
 import ErrorView from "@/views/ErrorView.vue";
 import LoginView from "@/views/user/LoginView.vue";
 import RegisterView from "@/views/user/RegisterView.vue";
-import AboutView from "@/views/interface/InvokeView.vue";
 import InvokeView from "@/views/interface/InvokeView.vue";
-import ADView from "@/views/ad/ADView.vue";
-import TestView from "@/views/ad/TestView.vue";
 import ProfileView from "@/views/user/ProfileView.vue";
-import AvatarView from "@/views/user/AvatarView.vue";
+import AvatarView from "@/views/upload/AvatarView.vue";
 import TextView from "@/views/user/TextView.vue";
+import InvokeCountView from "@/views/interface/InvokeCountView.vue";
+import AdManagerView from "@/views/ad/AdManagerView.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -29,6 +28,7 @@ const routes: Array<RouteRecordRaw> = [
     component: AvatarView,
     props: (route) => ({
       biz: route.query.biz,
+      bizId: route.query.bizId,
     }),
     meta: {
       hideInMenu: true,
@@ -67,6 +67,11 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
+    path: "/interface/count",
+    name: "调用统计",
+    component: InvokeCountView,
+  },
+  {
     path: "/interface/invoke",
     name: "接口调试",
     component: InvokeView,
@@ -78,6 +83,14 @@ const routes: Array<RouteRecordRaw> = [
     }),
     meta: {
       hideInMenu: true,
+    },
+  },
+  {
+    path: "/ad/manager",
+    name: "广告管理",
+    component: AdManagerView,
+    meta: {
+      access: "admin",
     },
   },
   {

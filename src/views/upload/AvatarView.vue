@@ -19,7 +19,6 @@
       type="success"
       :icon="Check"
       circle
-      text
       @click="submitUpload"
       size="small"
     >
@@ -36,7 +35,7 @@
 import { defineProps, withDefaults, ref } from "vue";
 import { genFileId } from "element-plus";
 import type { UploadInstance, UploadProps, UploadRawFile } from "element-plus";
-import { Check, Upload } from "@element-plus/icons-vue";
+import { Check } from "@element-plus/icons-vue";
 
 const upload = ref<UploadInstance>();
 
@@ -50,14 +49,21 @@ const handleExceed: UploadProps["onExceed"] = (files) => {
 //为了提高组件的复用性，定义属性类型
 interface Props {
   biz: string;
+  bizId: number;
 }
 
 // withDefaults 用于给组件指定初始值
 const props = withDefaults(defineProps<Props>(), {
   biz: () => "",
+  bizId: () => 0,
 });
 // 定义一个常量，用于拼接URL
-const avatarUrl = "http://localhost:7529/api/file/upload" + "?biz=" + props.biz;
+const avatarUrl =
+  "http://localhost:7529/api/file/upload" +
+  "?bizId=" +
+  props.bizId +
+  "&biz=" +
+  props.biz;
 // 上传到服务器
 const submitUpload = () => {
   //alert("上传到服务器");
