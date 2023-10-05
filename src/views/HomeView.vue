@@ -14,18 +14,14 @@
         </div>
       </el-carousel-item>
     </el-carousel>
-
     <!-- 搜索框 -->
     <el-input
       v-model="searchKeyword.searchText"
       placeholder="请输入接口名称或描述..."
-      style="
-        width: 50%;
-        height: 40px;
-        margin: 20px 25%;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-        border-radius: 50%;
-      "
+      :prefix-icon="Search"
+      class="search-input"
+      size="large"
+      clearable
       @keydown.enter="searchInterfaces"
     />
 
@@ -35,7 +31,7 @@
         <el-card
           :body-style="{ padding: '0px' }"
           class="interface-card"
-          style="width: 65%"
+          style="width: 70%"
         >
           <img :src="api.avatarUrl" class="image" />
           <div style="padding: 14px">
@@ -242,14 +238,15 @@ const advertisement = async () => {
 .advertisement-image {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* 让图片按比例缩放并填充整个容器 */
+  /*图片填充方式：*/
+  object-fit: cover; /* 保持图片原始比例，显示图片全部内容 */
 }
 
 .bottom {
-  margin-top: 13px;
+  margin-top: 13px; /* 调整底部按钮与内容的间距 */
   line-height: 10px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* 这里可以设置底部按钮的对齐方式 */
   align-items: center;
 }
 
@@ -316,5 +313,16 @@ const advertisement = async () => {
 
 .highlighted {
   color: red;
+}
+
+.search-input {
+  display: flex;
+  align-items: center; /* 垂直居中对齐 */
+  /* 可根据需要设置搜索框的宽度 */
+  width: 50%; /* 例如，设置宽度为300px */
+  margin: 20px auto; /* 居中对齐 */
+  /* 添加阴影 */
+  box-shadow: 1px 4px 6px rgba(0, 0, 0, 0.2); /* 阴影样式，可以根据需求调整 */
+  border-radius: 8px; /* 搜索框圆角 */
 }
 </style>

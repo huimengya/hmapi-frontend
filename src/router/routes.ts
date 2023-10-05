@@ -18,14 +18,6 @@ const routes: Array<RouteRecordRaw> = [
     component: HomeView,
   },
   {
-    path: "/text",
-    name: "文本",
-    component: TextView,
-    meta: {
-      hideInMenu: true,
-    },
-  },
-  {
     path: "/avatar",
     name: "头像",
     component: AvatarView,

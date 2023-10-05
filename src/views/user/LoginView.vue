@@ -138,6 +138,7 @@ const send = async () => {
 
 <style scoped>
 .github-style-container {
+  margin-top: 60px;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -7,7 +7,8 @@
         <img
           src="@/assets/logo.png"
           alt="logo"
-          style="width: 50px; height: 50px"
+          style="width: 80px; height: 40px; margin-top: 10px"
+          title="绘梦API"
         />
       </div>
       <el-menu
@@ -158,8 +159,6 @@ const handleMenuCommand = async (command) => {
   display: flex;
   justify-content: space-between; /* 将元素分散排列，头像在菜单栏右侧 */
   align-items: center; /* 垂直居中对齐 */
-  /*大小*/
-  height: 40px;
 }
 
 /* 调整头像的样式 */
