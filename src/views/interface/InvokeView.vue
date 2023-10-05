@@ -1,22 +1,24 @@
 <template>
   <div>
-    <!-- 功能一：请求方法、地址、发送请求   -->
-    <el-select v-model="selectedMethod" style="width: 10%" disabled>
-      <el-option label="GET" value="GET"></el-option>
-      <el-option label="POST" value="POST"></el-option>
-      <!-- 添加其他请求方法选项 -->
-    </el-select>
-    <el-input
-      v-model="requestUrl"
-      style="width: 50%; margin-left: 5px"
-      placeholder="输入地址"
-    />
-    <el-button color="#626aef" style="margin-left: 5px" @click="sendRequest"
-      >发送
-    </el-button>
+    <div style="width: 66%">
+      <!-- 功能一：请求方法、地址、发送请求   -->
+      <el-select v-model="selectedMethod" style="width: 15%" disabled>
+        <el-option label="GET" value="GET"></el-option>
+        <el-option label="POST" value="POST"></el-option>
+        <!-- 添加其他请求方法选项 -->
+      </el-select>
+      <el-input
+        v-model="requestUrl"
+        style="width: 46%; margin-left: 2%"
+        placeholder="输入地址"
+      />
+      <el-button color="#626aef" style="margin-left: 3%" @click="sendRequest"
+        >发送
+      </el-button>
+    </div>
     <!-- 功能二：设置请求参数   -->
     <!-- 表格用来显示参数 -->
-    <el-table :data="requestParams" border style="width: 66%; margin-top: 5px">
+    <el-table :data="requestParams" border style="width: 50%; margin-top: 5px">
       <el-table-column align="center" label="参数名" prop="name">
         <template v-slot="scope">
           <el-input
@@ -46,7 +48,7 @@
       @click="addParam"
       type="success"
       circle
-      style="margin-top: 5px; margin-left: 30%"
+      style="margin-top: 5px; margin-left: 25%"
     >
       +
     </el-button>

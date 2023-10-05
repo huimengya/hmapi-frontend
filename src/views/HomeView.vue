@@ -23,19 +23,19 @@
         width: 50%;
         height: 40px;
         margin: 20px 25%;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        border-radius: 30px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+        border-radius: 50%;
       "
       @keydown.enter="searchInterfaces"
     />
 
     <!-- 接口列表 -->
     <el-row v-if="apiList.length > 0">
-      <el-col v-for="(api, index) in apiList" :key="index" :span="8">
+      <el-col v-for="(api, index) in apiList" :key="index" :span="6">
         <el-card
           :body-style="{ padding: '0px' }"
           class="interface-card"
-          style="width: 70%"
+          style="width: 65%"
         >
           <img :src="api.avatarUrl" class="image" />
           <div style="padding: 14px">

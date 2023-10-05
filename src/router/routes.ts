@@ -21,6 +21,9 @@ const routes: Array<RouteRecordRaw> = [
     path: "/text",
     name: "文本",
     component: TextView,
+    meta: {
+      hideInMenu: true,
+    },
   },
   {
     path: "/avatar",

@@ -2,6 +2,14 @@
   <div id="basicLayoutView">
     <!-- 使用 flex 布局将菜单栏和头像放在同一行 -->
     <div class="header">
+      <!--    网站头像  -->
+      <div class="logo">
+        <img
+          src="@/assets/logo.png"
+          alt="logo"
+          style="width: 50px; height: 50px"
+        />
+      </div>
       <el-menu
         :default-active="activeIndex"
         class="el-menu-demo"
@@ -150,17 +158,25 @@ const handleMenuCommand = async (command) => {
   display: flex;
   justify-content: space-between; /* 将元素分散排列，头像在菜单栏右侧 */
   align-items: center; /* 垂直居中对齐 */
+  /*大小*/
+  height: 40px;
 }
 
 /* 调整头像的样式 */
 .avatar-container {
   margin-right: 5px;
+  margin-top: 5px;
+  width: 50px;
+  height: 50px;
 }
 
 /* 默认样式 */
 .avatar {
   cursor: pointer; /* 鼠标悬停时显示手型光标 */
+  width: 100%;
+  height: 100%;
 }
+
 /*设置页面的背景颜色为白色*/
 #basicLayoutView {
   background-color: white;

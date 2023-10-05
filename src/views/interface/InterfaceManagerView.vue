@@ -150,7 +150,7 @@
       @current-change="handleCurrentPageChange"
       showTotal="true"
       :current-page="search.current"
-      :page-sizes="[5, 10, 15, 20, 50]"
+      :page-sizes="[7, 10, 15, 20, 50]"
       :page-size="search.pageSize"
       :total="parseInt(total, 10)"
       small
@@ -214,7 +214,7 @@ const dialogVisible = async () => {
     return;
   } else {
     // 更新
-    alert("更新");
+    //alert("更新");
     const res =
       await InterfaceInfoControllerService.updateInterfaceInfoUsingPost(
         (editForm.value = {
@@ -305,7 +305,7 @@ const search = ref<InterfaceInfoQueryRequest>({
   name: "",
   status: undefined,
   current: 1,
-  pageSize: 5,
+  pageSize: 7,
 });
 const loadData = async () => {
   // 发送请求获取数据

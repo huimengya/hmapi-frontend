@@ -273,7 +273,6 @@ const loadData = async () => {
   if (res.code === 0) {
     // 将数据赋值给响应式变量
     dataList.value = res.data?.records;
-    console.log("接口管理", res.data);
     total.value = res.data?.total;
     console.log("total", res.data?.total);
   } else {
