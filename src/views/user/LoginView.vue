@@ -29,7 +29,7 @@
               border-radius: 5px;
             "
           >
-            重新发送:({{ countdown }}s)
+            重新发送: ({{ countdown }} s)
           </el-button>
 
           <el-button

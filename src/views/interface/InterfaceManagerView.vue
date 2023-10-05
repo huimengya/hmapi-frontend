@@ -29,7 +29,7 @@
     <el-table-column label="描述" prop="description" width="200" />
     <el-table-column label="请求头" prop="requestHeader" width="120" />
     <el-table-column label="响应头" prop="responseHeader" width="120" />
-    <el-table-column label="URL" prop="url" width="120" />
+    <el-table-column label="请求URL" prop="url" width="120" />
     <el-table-column label="方法" prop="method" width="60" />
     <el-table-column label="状态" prop="status" align="center" width="60">
       <template v-slot="scope">
@@ -85,10 +85,7 @@
     <!-- 编辑表单 -->
     <el-form :model="editForm" label-width="80px">
       <el-form-item label="名字">
-        <el-input
-          v-model="editForm.name"
-          placeholder="新建不要上传图片！！！"
-        ></el-input>
+        <el-input v-model="editForm.name"></el-input>
       </el-form-item>
       <el-form-item label="描述">
         <el-input v-model="editForm.description"></el-input>
@@ -113,7 +110,7 @@
           v-model="editForm.responseParams"
         ></el-input>
       </el-form-item>
-      <el-form-item label="URL">
+      <el-form-item label="请求URL">
         <el-input v-model="editForm.url"></el-input>
       </el-form-item>
       <el-form-item label="方法">
@@ -128,11 +125,15 @@
       <el-form-item label="调用次数">
         <el-input v-model="editForm.totalInvokes"></el-input>
       </el-form-item>
-      <el-form-item>
+      <el-form-item label="接口头像" v-if="!isNew">
         <AvatarView :biz="inter" :bizId="editForm.id" />
       </el-form-item>
-      <el-form-item label="接口URL">
-        <el-input v-model="editForm.avatarUrl"></el-input>
+      <el-form-item label="头像URL">
+        <el-input
+          v-model="editForm.avatarUrl"
+          disabled
+          placeholder="更新接口头像会自动更新接口URL"
+        ></el-input>
       </el-form-item>
     </el-form>
     <!-- 确认和取消按钮 -->

@@ -84,10 +84,7 @@
     <!-- 编辑表单 -->
     <el-form :model="editForm" label-width="80px">
       <el-form-item label="名字">
-        <el-input
-          v-model="editForm.name"
-          placeholder="新建不要上传图片！！！"
-        ></el-input>
+        <el-input v-model="editForm.name"></el-input>
       </el-form-item>
       <el-form-item label="描述">
         <el-input v-model="editForm.description"></el-input>
@@ -98,11 +95,15 @@
       <el-form-item label="状态">
         <el-input v-model="editForm.status"></el-input>
       </el-form-item>
-      <el-form-item label="广告头像">
+      <el-form-item label="广告头像" v-if="!isNew">
         <AvatarView :biz="ad" :bizId="editForm.id" />
       </el-form-item>
       <el-form-item label="广告URL">
-        <el-input v-model="editForm.avatarUrl"></el-input>
+        <el-input
+          v-model="editForm.avatarUrl"
+          placeholder="更新广告头像后会自动更新广告URL"
+          disabled
+        ></el-input>
       </el-form-item>
     </el-form>
     <!-- 确认和取消按钮 -->
