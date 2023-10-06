@@ -3,7 +3,7 @@
     <!-- 使用 el-descriptions 显示个人信息 -->
     <el-descriptions title="个人信息" column="1" label-align="left">
       <el-descriptions-item>
-        <AvatarView :biz="user_avatar" />
+        <AvatarView :biz="user_avatar" :bizId="formData.id" />
       </el-descriptions-item>
       <el-descriptions-item label="名字:">
         <span v-if="!editing" @click="startEditing">{{
@@ -45,8 +45,8 @@
           <WalletFilled />
         </el-icon>
         <el-button color="#626aef" plain size="small" text @click="toPay"
-          >充值</el-button
-        >
+          >充值
+        </el-button>
       </el-descriptions-item>
     </el-descriptions>
     <el-divider />
@@ -69,7 +69,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import {
   ElButton,
   ElDescriptions,
