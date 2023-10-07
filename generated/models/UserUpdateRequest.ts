@@ -9,7 +9,6 @@ export type UserUpdateRequest = {
     id?: number;
     status?: number;
     userAccount?: string;
-    userAvatar?: string;
     userName?: string;
     userPassword?: string;
     userRole?: string;
