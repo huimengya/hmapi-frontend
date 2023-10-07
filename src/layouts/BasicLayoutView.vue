@@ -63,8 +63,17 @@
         </el-dropdown>
       </div>
     </div>
-    <div style="margin-top: 10px">
+    <div class="content" style="margin-top: 10px">
       <router-view />
+    </div>
+    <!-- 备案信息 -->
+    <div class="footer">
+      <span
+        >© 2023 绘梦API |
+        <a href="https://beian.miit.gov.cn/" target="_blank"
+          >滇ICP2023004975号</a
+        >
+      </span>
     </div>
   </div>
 </template>
@@ -179,5 +188,27 @@ const handleMenuCommand = async (command) => {
 /*设置页面的背景颜色为白色*/
 #basicLayoutView {
   background-color: white;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative; /* 用于容纳 footer */
+}
+
+.content {
+  flex: 1; /* 自动扩展，占据剩余的空间 */
+  padding: 20px; /* 可根据实际需要调整 */
+}
+
+.footer {
+  text-align: center;
+  padding: 1px 0;
+  color: #666; /* 适当的文字颜色 */
+  font-size: 14px;
+
+  /* 使用 position: absolute; 实现效果 */
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 </style>

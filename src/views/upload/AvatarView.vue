@@ -58,20 +58,21 @@ const props = withDefaults(defineProps<Props>(), {
   bizId: () => 0,
 });
 // 定义一个常量，用于拼接URL
+/*
 const avatarUrl =
   "http://localhost:4764/api/file/upload" +
   "?bizId=" +
   props.bizId +
   "&biz=" +
   props.biz;
-/*
+ */
 const avatarUrl =
   "http://api.chatgptmeta.icu:4764/api/file/upload" +
   "?bizId=" +
   props.bizId +
   "&biz=" +
   props.biz;
- */
+
 // 上传到服务器
 const submitUpload = () => {
   //alert("上传到服务器");
