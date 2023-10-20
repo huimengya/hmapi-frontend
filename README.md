@@ -40,6 +40,15 @@ npm run serve
 #### 在线调用
 ![接口调用](https://github.com/huimengya/hmapi-frontend/assets/117280864/6033273d-eeed-4b0e-b3fa-208afe75eb59)
 
+#### 积分商城
+![积分商城](https://github.com/huimengya/hmapi-frontend/assets/117280864/d3a3df0d-3325-4c81-a92f-0b166ec9795b)
+
+#### 支付宝支付
+![支付宝支付](https://github.com/huimengya/hmapi-frontend/assets/117280864/88669b60-e6cc-44f1-8b3b-e827acc09b56)
+
+#### 订单查询
+![订单列表](https://github.com/huimengya/hmapi-frontend/assets/117280864/77849479-e6b1-4995-a0c8-535043a8cd8a)
+
 ### Compiles and minifies for production
 ```
 npm run build
