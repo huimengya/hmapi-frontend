@@ -20,8 +20,7 @@ export type OpenAPIConfig = {
 };
 
 export const OpenAPI: OpenAPIConfig = {
-    BASE: 'http://apibackend.chatgptmeta.icu:4764',
-    //BASE: 'http://localhost:4764',
+    BASE: 'http://localhost:8090',
     VERSION: '1.0',
     WITH_CREDENTIALS: true,
     CREDENTIALS: 'include',

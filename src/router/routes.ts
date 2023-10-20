@@ -7,15 +7,40 @@ import RegisterView from "@/views/user/RegisterView.vue";
 import InvokeView from "@/views/interface/InvokeView.vue";
 import ProfileView from "@/views/user/ProfileView.vue";
 import AvatarView from "@/views/upload/AvatarView.vue";
-import TextView from "@/views/user/TextView.vue";
 import InvokeCountView from "@/views/interface/InvokeCountView.vue";
 import AdManagerView from "@/views/ad/AdManagerView.vue";
+import SuccessView from "@/pay/SuccessView.vue";
+import OrdersView from "@/pay/OrdersView.vue";
+import PointsView from "@/pay/PointsView.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
     name: "首页",
     component: HomeView,
+  },
+  {
+    path: "/points",
+    name: "积分商城",
+    component: PointsView,
+  },
+  {
+    path: "/orders",
+    name: "订单",
+    component: OrdersView,
+  },
+  // {
+  //   path: "/download",
+  //   name: "下载",
+  //   component: DownloadView,
+  // },
+  {
+    path: "/success",
+    name: "支付成功",
+    component: SuccessView,
+    meta: {
+      hideInMenu: true,
+    },
   },
   {
     path: "/avatar",
